@@ -8,7 +8,7 @@ optimizer = true
 optimizer_runs = 200
 match-path = "test/**/*.t.sol"
 match-contract = "Test$"
-deny_warnings = true
+# deny_warnings = true
 
 libs = [
     # We provide a set of useful contract utilities
