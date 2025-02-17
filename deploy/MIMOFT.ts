@@ -17,6 +17,12 @@ const configurations = {
         args: (endpointAddress: string) => [endpointAddress],
         initializeArgs: (signer: string) => ['Magic Internet Money', 'MIM', signer],
         feeHandler: ethers.constants.AddressZero
+    },
+    'arbitrum-mainnet': {
+        contractName: 'AbraOFTUpgradeableExisting',
+        args: (endpointAddress: string) => [0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A, endpointAddress], // MIM oft endpoint v1 address
+        initializeArgs: (signer: string) => [signer],
+        feeHandler: '0xE66BE95FE4E3889a66925d996AF3E4dC173754a2'
     }
 }
 

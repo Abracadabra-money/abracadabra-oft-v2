@@ -90,10 +90,6 @@ interface IERC20Decimals is IERC20 {
     function decimals() external view returns (uint8);
 }
 
-// To run tests on ARB: forge test --fork-url https://arb1.arbitrum.io/rpc  --mc AbraForkTests
-// To run tests on ETH: forge test --fork-url <ETH> --mc AbraForkTests
-// To run tests on Bera: forge test --fork-url https://cdn.routescan.io/api/evm/80094/rpc  --mc AbraForkTests
-
 contract AbraForkTestBase is Test {
     uint256 constant ETH_CHAIN_ID = 1;
     uint256 constant INK_CHAIN_ID = 57073;
