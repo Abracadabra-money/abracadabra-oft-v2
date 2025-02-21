@@ -30,6 +30,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY
 export const ETH_SAFE_ADDRESS = "0xDF2C270f610Dc35d8fFDA5B453E74db5471E126B";
 export const ARB_SAFE_ADDRESS = "0xA71A021EF66B03E45E0d85590432DFCfa1b7174C";
 export const BERA_SAFE_ADDRESS = "0xa4EF0376a91872B9c5d53D10410Bdf36e6Cf4e5E";
+export const OPT_SAFE_ADDRESS = "0xCbb86ffF0F8094C370cdDb76C7F270C832a8C7C0";
 
 const accounts: HttpNetworkAccountsUserConfig | undefined = MNEMONIC
     ? { mnemonic: MNEMONIC }
@@ -84,8 +85,22 @@ const config: HardhatUserConfig = {
                 }
             },
             safeConfig: {
-                safeUrl: 'https://safe-transaction-arbitrum.safe.global',
+                safeUrl: 'https://safe-transaction-arbitrum.safe.global', 
                 safeAddress: ARB_SAFE_ADDRESS
+            }
+        },
+        'optimism-mainnet': {
+            eid: EndpointId.OPTIMISM_V2_MAINNET,
+            url: process.env.OPTIMISM_RPC_URL || '',
+            accounts,
+            verify: {
+                etherscan: {
+                    apiKey: process.env.OPTIMISM_ETHERSCAN_KEY || '',
+                }
+            },
+            safeConfig: {
+                safeUrl: 'TODO', 
+                safeAddress: OPT_SAFE_ADDRESS
             }
         },
         'bera-mainnet': {
