@@ -26,7 +26,7 @@ const configurations = {
             endpointAddress
         ],
         initializeArgs: (signer: string) => [signer],
-        feeHandler: '0xE66BE95FE4E3889a66925d996AF3E4dC173754a2'
+        feeHandler: '0xA9Ea2B6F533db3679eEda162e23c1159439347bB'
     },
     'optimism-mainnet': {
         contractName: 'AbraOFTUpgradeableExisting',
