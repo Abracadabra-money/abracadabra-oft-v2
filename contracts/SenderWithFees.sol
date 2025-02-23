@@ -23,16 +23,11 @@ abstract contract SenderWithFees is OAppSenderUpgradeable {
         MessagingFee memory _fee,
         address _refundAddress
     ) internal virtual override returns (MessagingReceipt memory receipt) {
+        uint256 msgValue = msg.value;
         uint256 protocolNativeFees;
 
         if (feeHandler != address(0)) {
-            protocolNativeFees = IFeeHandler(feeHandler).quoteNativeFee(
-                _dstEid,
-                _message,
-                _options,
-                _fee.nativeFee,
-                _fee.lzTokenFee
-            );
+            protocolNativeFees = IFeeHandler(feeHandler).quoteNativeFee();
         }
 
         if (_fee.lzTokenFee > 0) {
@@ -44,12 +39,12 @@ abstract contract SenderWithFees is OAppSenderUpgradeable {
             require(success, "FEE_TRANSFER_FAILED");
             emit FeeCollected(protocolNativeFees);
 
-            _fee.nativeFee -= protocolNativeFees;
+            msgValue -= protocolNativeFees;
         }
 
         return
             // solhint-disable-next-line check-send-result
-            endpoint.send{ value: _fee.nativeFee }(
+            endpoint.send{ value: msgValue }(
                 MessagingParams(_dstEid, _getPeerOrRevert(_dstEid), _message, _options, _fee.lzTokenFee > 0),
                 _refundAddress
             );
@@ -64,13 +59,7 @@ abstract contract SenderWithFees is OAppSenderUpgradeable {
         fee = super._quote(_dstEid, _message, _options, _payInLzToken);
 
         if (feeHandler != address(0)) {
-            fee.nativeFee += IFeeHandler(feeHandler).quoteNativeFee(
-                _dstEid,
-                _message,
-                _options,
-                fee.nativeFee,
-                fee.lzTokenFee
-            );
+            fee.nativeFee += IFeeHandler(feeHandler).quoteNativeFee();
         }
     }
 }

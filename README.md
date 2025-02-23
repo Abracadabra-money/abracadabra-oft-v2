@@ -30,7 +30,7 @@ bunx hardhat lz:deploy --tags <deployement-name> --networks <network-name>
 
 # Verify
 ```
-bunx hardhat etherscan-verify --network <network-name>
+bunx hardhat etherscan-verify --network <network-name> --contract-name <contract-name>
 ```
 
 # LayerZero Wiring
