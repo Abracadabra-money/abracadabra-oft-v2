@@ -36,7 +36,7 @@ const configurations = {
             endpointAddress
         ],
         initializeArgs: (signer: string) => [signer],
-        feeHandler: ''
+        feeHandler: '0x6EfDD3F8D372740ceb43b3a12f5C56F60BE8f491'
     }
 }
 
