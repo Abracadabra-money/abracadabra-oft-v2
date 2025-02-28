@@ -37,6 +37,80 @@ const configurations = {
         ],
         initializeArgs: (signer: string) => [signer],
         feeHandler: '0x6EfDD3F8D372740ceb43b3a12f5C56F60BE8f491'
+    },
+    'moonriver-mainnet': {
+        contractName: 'AbraOFTUpgradeableExisting',
+        args: (endpointAddress: string) => [
+            '0x0caE51e1032e8461f4806e26332c030E34De3aDb', // MIM address
+            '0x6e858b0DD9a9Dcdf710B28C236292E30ba079728', // MIM Elevated Minter/Burner address
+            endpointAddress
+        ],
+        initializeArgs: (signer: string) => [signer],
+        feeHandler: ethers.constants.AddressZero
+    },
+    'avalanche-mainnet': {
+        contractName: 'AbraOFTUpgradeableExisting',
+        args: (endpointAddress: string) => [
+            '0x130966628846BFd36ff31a822705796e8cb8C18D', // MIM address
+            '0x9BA780f8a517E2245892a388427973C8b7c3B769', // MIM Elevated Minter/Burner address
+            endpointAddress
+        ],
+        initializeArgs: (signer: string) => [signer],
+        feeHandler: ethers.constants.AddressZero
+    },
+    'bsc-mainnet': {
+        contractName: 'AbraOFTUpgradeableExisting',
+        args: (endpointAddress: string) => [
+            '0xfE19F0B51438fd612f6FD59C1dbB3eA319f433Ba', // MIM address
+            '0x79533F85479e04d2214305638B6586b724beC951', // MIM Elevated Minter/Burner address
+            endpointAddress
+        ],
+        initializeArgs: (signer: string) => [signer],
+        feeHandler: ethers.constants.AddressZero
+    },
+    'blast-mainnet': {
+        contractName: 'AbraOFTUpgradeableExisting',
+        args: (endpointAddress: string) => [
+            '0x76DA31D7C9CbEAE102aff34D3398bC450c8374c1', // MIM address
+            '0x76DA31D7C9CbEAE102aff34D3398bC450c8374c1', // MIM Minter/Burner address (SAME as MIM address)
+            endpointAddress
+        ],
+        initializeArgs: (signer: string) => [signer],
+        feeHandler: ethers.constants.AddressZero
+    },
+    'kava-mainnet': {
+        contractName: 'AbraOFTUpgradeableExisting',
+        args: (endpointAddress: string) => [
+            '0x471EE749bA270eb4c1165B5AD95E614947f6fCeb', // MIM address
+            '0x471EE749bA270eb4c1165B5AD95E614947f6fCeb', // MIM Minter/Burner address (SAME as MIM address)
+            endpointAddress
+        ],
+        initializeArgs: (signer: string) => [signer],
+        feeHandler: ethers.constants.AddressZero
+    },
+
+    ////////////////////////////////////////////////////////////
+    // TBD: Deprecated networks ?
+    ////////////////////////////////////////////////////////////
+    'polygon-mainnet': {
+        contractName: 'AbraOFTUpgradeableExisting',
+        args: (endpointAddress: string) => [
+            '0x49a0400587A7F65072c87c4910449fDcC5c47242', // MIM address
+            '0x8E7982492f6D330d0E1AAB9e110d7dfFc69C20fc', // MIM Elevated Minter/Burner address
+            endpointAddress
+        ],
+        initializeArgs: (signer: string) => [signer],
+        feeHandler: ethers.constants.AddressZero
+    },
+    'linea-mainnet': {
+        contractName: 'AbraOFTUpgradeableExisting',
+        args: (endpointAddress: string) => [
+            '0xDD3B8084AF79B9BaE3D1b668c0De08CCC2C9429A', // MIM address
+            '0xDD3B8084AF79B9BaE3D1b668c0De08CCC2C9429A', // MIM Minter/Burner address (SAME as MIM address)
+            endpointAddress
+        ],
+        initializeArgs: (signer: string) => [signer],
+        feeHandler: ethers.constants.AddressZero
     }
 }
 
