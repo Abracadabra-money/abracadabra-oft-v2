@@ -9,6 +9,11 @@ const ethereumContract: OmniPointHardhat = {
     contractName: 'MIMOFT',
 }
 
+const arbitrumContract: OmniPointHardhat = {
+    eid: EndpointId.ARBITRUM_V2_MAINNET,
+    contractName: 'MIMOFT',
+}
+
 const beraContract: OmniPointHardhat = {
     eid: EndpointId.BERA_V2_MAINNET,
     contractName: 'MIMOFT',
@@ -41,6 +46,8 @@ export default async function () {
     // [srcContract, dstContract, [requiredDVNs, [optionalDVNs, threshold]], [srcToDstConfirmations, dstToSrcConfirmations]], [enforcedOptionsSrcToDst, enforcedOptionsDstToSrc]
     const connections = await generateConnectionsConfig([
         [ethereumContract, beraContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+        [ethereumContract, arbitrumContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+        [arbitrumContract, beraContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
     ]) as OmniEdgeHardhat<OAppEdgeConfig>[];
 
     // Prints generated connections
@@ -54,6 +61,14 @@ export default async function () {
                 config: {
                     owner: ETH_SAFE_ADDRESS,
                     delegate: ETH_SAFE_ADDRESS,
+                },
+            },
+            // MIM Arbitrum
+            {
+                contract: arbitrumContract,
+                config: {
+                    owner: ARB_SAFE_ADDRESS,
+                    delegate: ARB_SAFE_ADDRESS,
                 },
             },
             // MIM Bera

@@ -17,6 +17,26 @@ const configurations = {
         args: (endpointAddress: string) => [endpointAddress],
         initializeArgs: (signer: string) => ['Magic Internet Money', 'MIM', signer],
         feeHandler: ethers.constants.AddressZero
+    },
+    'arbitrum-mainnet': {
+        contractName: 'AbraOFTUpgradeableExisting',
+        args: (endpointAddress: string) => [
+            '0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A', // MIM address
+            '0x26F20d6Dee51ad59AF339BEdF9f721113D01b6b3', // MIM Elevated Minter/Burner address
+            endpointAddress
+        ],
+        initializeArgs: (signer: string) => [signer],
+        feeHandler: '0xA9Ea2B6F533db3679eEda162e23c1159439347bB'
+    },
+    'optimism-mainnet': {
+        contractName: 'AbraOFTUpgradeableExisting',
+        args: (endpointAddress: string) => [
+            '0xB153FB3d196A8eB25522705560ac152eeEc57901', // MIM address
+            '0x1E188DD74adf8CC95c98714407e88a4a99b759A5', // MIM Elevated Minter/Burner address
+            endpointAddress
+        ],
+        initializeArgs: (signer: string) => [signer],
+        feeHandler: '0x6EfDD3F8D372740ceb43b3a12f5C56F60BE8f491'
     }
 }
 
