@@ -145,6 +145,22 @@ contract AbraForkTestBase is Test {
     address constant LZ_DVN_ETH = 0x589dEDbD617e0CBcB916A9223F4d1300c294236b;
     address constant MIM_DVN_ETH = 0x0Ae4e6a9a8B01EE22c6A49aF22B674A4E033A23D;
 
+    // NIBIRU
+
+    address constant ENDPOINT_NIBIRU = 0x2a5E79DEE6E3544588BB3b675B1Cc3354Df2AEFD;
+    address constant MIM_OFT_NIBIRU = 0xfCfc58685101e2914cBCf7551B432500db84eAa8;
+    address constant SAFE_NIBIRU = 0x282dF9f8A9b1F23aEa9050A4fdEb5eEe29c2F540;
+    uint32 constant NIBIRU_EID = 30369;
+    uint64 constant NIBIRU_CONFIRMATIONS = 20;
+    address constant SEND_LIB_NIBIRU = 0xd1FA2df582C6C986Ec573e1a3B0218049CF1E5c7; // SendUln302
+    address constant RECEIVE_LIB_NIBIRU = 0xeB8b16D080B0FcB0C6A89544f4Dd31e595382E8B; // ReceiveUln302
+
+    address constant LZ_DVN_NIBIRU = 0x5727E81A40015961145330D91cC27b5E189fF3e1;
+    address constant MIM_DVN_NIBIRU = 0x0Ae4e6a9a8B01EE22c6A49aF22B674A4E033A23D; // TODO
+
+    uint256 NIBIRU_CHAIN_ID = 6900;
+
+
     // This is the keccak-256 hash of "eip1967.proxy.admin" subtracted by 1
     bytes32 constant PROXY_ADMIN_SLOT = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;
 
@@ -203,6 +219,15 @@ contract AbraForkTestBase is Test {
             safe = SAFE_BERA;
             sendLib = SEND_LIB_BERA;
             receiveLib = RECEIVE_LIB_BERA;
+        } else if (block.chainid == NIBIRU_CHAIN_ID) {
+            endpoint = ILayerZeroEndpointV2(ENDPOINT_NIBIRU);
+            mimOft = IOFTComplete(MIM_OFT_NIBIRU);
+            mimOftPeer = MIM_OFT_NIBIRU;
+            sendingSrcEid = ETH_EID;
+            sendingDstEid = ETH_EID;
+            safe = SAFE_NIBIRU;
+            sendLib = SEND_LIB_NIBIRU;
+            receiveLib = RECEIVE_LIB_NIBIRU;
         } else {
             revert("unsupported chain!");
         }
@@ -218,12 +243,15 @@ contract AbraForkTestBase is Test {
             assertEq(mimOft.decimalConversionRate(), 1e12);
         }
 
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
+
         assertEq(spellV2Oft.sharedDecimals(), 6);
         if (block.chainid != ETH_CHAIN_ID) {
             // Adapter contract on ETH
             assertEq(spellV2Oft.decimals(), 18);
         }
         assertEq(spellV2Oft.decimalConversionRate(), 1e12);
+
 
         assertEq(bSpellOft.sharedDecimals(), 6);
         if (block.chainid != ARB_CHAIN_ID) {
@@ -277,6 +305,7 @@ contract AbraForkTestBase is Test {
     }
 
     function test_oft_send_bspell() public {
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         if (block.chainid == ARB_CHAIN_ID) {
             assertEq(IERC20(bSpellOft.token()).balanceOf(alice), 0);
         } else {
@@ -321,6 +350,7 @@ contract AbraForkTestBase is Test {
     }
 
     function test_oft_send_spellv2() public {
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         if (block.chainid == ETH_CHAIN_ID) {
             assertEq(IERC20(spellV2Oft.token()).balanceOf(alice), 0);
         } else {
@@ -368,6 +398,8 @@ contract AbraForkTestBase is Test {
             mimOft.initialize("", "", address(0));
         }
 
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
+
         vm.expectRevert();
         spellV2Oft.initialize("", "", address(0));
 
@@ -387,6 +419,8 @@ contract AbraForkTestBase is Test {
             vm.expectRevert();
             implementationMim.initialize("XX", "XX", alice);
         }
+
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
 
         address proxyAdminSpell = address(uint160(uint256(vm.load(address(spellV2Oft), PROXY_ADMIN_SLOT))));
 
@@ -447,6 +481,7 @@ contract AbraForkTestBase is Test {
     }
 
     function test_quote_oft_spellV2() public {
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         uint256 mimDecimalConversionRate = spellV2Oft.decimalConversionRate();
         uint256 sharedDecimals = spellV2Oft.sharedDecimals();
         uint256 localDecimals;
@@ -483,6 +518,7 @@ contract AbraForkTestBase is Test {
     }
 
     function test_quote_oft_bSpell() public {
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         uint256 mimDecimalConversionRate = bSpellOft.decimalConversionRate();
         uint256 sharedDecimals = bSpellOft.sharedDecimals();
         uint256 localDecimals;
@@ -528,6 +564,9 @@ contract AbraForkTestBase is Test {
             address mimArbPeer = AddressCast.toAddress(mimOft.peers(ARB_EID));
             assertEq(mimArbPeer, address(0));
 
+            address mimNibiPeer = AddressCast.toAddress(mimOft.peers(NIBIRU_EID));
+            assertEq(mimNibiPeer, MIM_OFT_NIBIRU);
+
             // SpellV2
 
             address spellV2BeraPeer = AddressCast.toAddress(spellV2Oft.peers(BERA_EID));
@@ -570,6 +609,9 @@ contract AbraForkTestBase is Test {
             address mimArbPeer = AddressCast.toAddress(mimOft.peers(ARB_EID));
             assertEq(mimArbPeer, address(0));
 
+            address mimNibiPeer = AddressCast.toAddress(mimOft.peers(NIBIRU_EID));
+            assertEq(mimNibiPeer, MIM_OFT_NIBIRU);
+
             // SpellV2
 
             address spellV2EthPeer = AddressCast.toAddress(spellV2Oft.peers(ETH_EID));
@@ -585,6 +627,15 @@ contract AbraForkTestBase is Test {
 
             address bspellArbPeer = AddressCast.toAddress(bSpellOft.peers(ARB_EID));
             assertEq(bspellArbPeer, BSPELL_OFT_ARB);
+        } else if (block.chainid == NIBIRU_CHAIN_ID) {
+            // MIM
+            address mimEthPeer = AddressCast.toAddress(mimOft.peers(ETH_EID));
+            assertEq(mimEthPeer, MIM_OFT_ETH);
+
+            address mimBeraPeer = AddressCast.toAddress(mimOft.peers(BERA_EID));
+            assertEq(mimBeraPeer, MIM_OFT_BERA);
+        } else {
+            revert("unsupported chain!");
         }
     }
 
@@ -593,6 +644,7 @@ contract AbraForkTestBase is Test {
             Ownable proxyAdminMim = Ownable(address(uint160(uint256(vm.load(address(mimOft), PROXY_ADMIN_SLOT)))));
             assertEq(proxyAdminMim.owner(), safe);
         }
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
 
         Ownable proxyAdminSpellV2 = Ownable(address(uint160(uint256(vm.load(address(spellV2Oft), PROXY_ADMIN_SLOT)))));
         assertEq(proxyAdminSpellV2.owner(), safe);
@@ -605,6 +657,7 @@ contract AbraForkTestBase is Test {
         if (block.chainid != ARB_CHAIN_ID) {
             assertEq(Ownable(address(mimOft)).owner(), safe);
         }
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         assertEq(Ownable(address(spellV2Oft)).owner(), safe);
         assertEq(Ownable(address(bSpellOft)).owner(), safe);
     }
@@ -613,6 +666,7 @@ contract AbraForkTestBase is Test {
         if (block.chainid != ARB_CHAIN_ID) {
             assertEq(ILayerZeroEndpointDelegateable(address(endpoint)).delegates(address(mimOft)), safe);
         }
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         assertEq(ILayerZeroEndpointDelegateable(address(endpoint)).delegates(address(spellV2Oft)), safe);
         assertEq(ILayerZeroEndpointDelegateable(address(endpoint)).delegates(address(bSpellOft)), safe);
     }
@@ -621,6 +675,7 @@ contract AbraForkTestBase is Test {
         if (block.chainid != ARB_CHAIN_ID) {
             assertEq(mimOft.msgInspector(), address(0));
         }
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         assertEq(spellV2Oft.msgInspector(), address(0));
         assertEq(bSpellOft.msgInspector(), address(0));
     }
@@ -656,10 +711,61 @@ contract AbraForkTestBase is Test {
             _verify_uln_config(ETH_EID, address(mimOft), sendLib, BERA_CONFIRMATIONS, requiredDvns, optionalDvns, 0);
 
             _verify_uln_config(ETH_EID, address(mimOft), receiveLib, ETH_CONFIRMATIONS, requiredDvns, optionalDvns, 0);
+        } else if (block.chainid == NIBIRU_CHAIN_ID) {
+            address[] memory requiredDvns = new address[](2);
+            requiredDvns[0] = LZ_DVN_NIBIRU;
+            requiredDvns[1] = MIM_DVN_NIBIRU;
+
+            address[] memory optionalDvns = new address[](0);
+
+            // NIBIRU <=> ETH
+
+            _verify_uln_config(
+                ETH_EID,
+                address(mimOft),
+                sendLib,
+                NIBIRU_CONFIRMATIONS,
+                requiredDvns,
+                optionalDvns,
+                0
+            );
+
+            _verify_uln_config(
+                ETH_EID,
+                address(mimOft),
+                receiveLib,
+                ETH_CONFIRMATIONS,
+                requiredDvns,
+                optionalDvns,
+                0
+            );
+
+            // NIBIRU <=> BERA
+
+            _verify_uln_config(
+                BERA_EID,
+                address(mimOft),
+                sendLib,
+                NIBIRU_CONFIRMATIONS,
+                requiredDvns,
+                optionalDvns,
+                0
+            );
+
+            _verify_uln_config(
+                BERA_EID,
+                address(mimOft),
+                receiveLib,
+                BERA_CONFIRMATIONS,
+                requiredDvns,
+                optionalDvns,
+                0
+            );
         }
     }
 
     function test_oft_config_spellv2() public view {
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         if (block.chainid == ETH_CHAIN_ID) {
             address[] memory requiredDvns = new address[](2);
             requiredDvns[0] = MIM_DVN_ETH;
@@ -786,6 +892,7 @@ contract AbraForkTestBase is Test {
     }
 
     function test_oft_config_bSpell() public view {
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         if (block.chainid == 1) {
             address[] memory requiredDvns = new address[](2);
             requiredDvns[0] = MIM_DVN_ETH;
@@ -927,21 +1034,28 @@ contract AbraForkTestBase is Test {
 
 contract AbraForkEthTest is AbraForkTestBase {
     function setUp() public override {
-        vm.createSelectFork(vm.rpcUrl("mainnet"), 21845805);
+        vm.createSelectFork(vm.rpcUrl("mainnet"));
         super.setUp();
     }
 }
 
 contract AbraForkArbitrumTest is AbraForkTestBase {
     function setUp() public override {
-        vm.createSelectFork(vm.rpcUrl("arbitrum"), 306026400);
+        vm.createSelectFork(vm.rpcUrl("arbitrum"));
         super.setUp();
     }
 }
 
 contract AbraForkBeraTest is AbraForkTestBase {
     function setUp() public override {
-        vm.createSelectFork(vm.rpcUrl("berachain"), 1132358);
+        vm.createSelectFork("https://berachain-mainnet.g.alchemy.com/v2/nY5ShifOonulvuzmVoVHouV5JuHqiiHK");
+        super.setUp();
+    }
+}
+
+contract AbraForkNibiruTest is AbraForkTestBase {
+    function setUp() public override {
+        vm.createSelectFork("https://cdn.routescan.io/api/evm/6900/rpc", 22783442);
         super.setUp();
     }
 }
