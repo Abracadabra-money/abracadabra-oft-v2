@@ -1048,7 +1048,7 @@ contract AbraForkArbitrumTest is AbraForkTestBase {
 
 contract AbraForkBeraTest is AbraForkTestBase {
     function setUp() public override {
-        vm.createSelectFork("https://berachain-mainnet.g.alchemy.com/v2/nY5ShifOonulvuzmVoVHouV5JuHqiiHK");
+        vm.createSelectFork("berachain");
         super.setUp();
     }
 }
