@@ -142,8 +142,8 @@ const config: HardhatUserConfig = {
                 contractNetworks: {
                     // @ts-ignore
                     '6900': {
-                        multiSendAddress: 'HERE',
-                        multiSendCallOnlyAddress: 'HERE',
+                        multiSendAddress: '0x38869bf66a61cF6bDB996A6aE40D5853Fd43B526',
+                        multiSendCallOnlyAddress: '0x9641d764fc13c8B624c04430C7356C1C7C8102e2',
                     },
                 },
             },

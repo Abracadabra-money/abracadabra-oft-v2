@@ -50,8 +50,8 @@ const deploy: DeployFunction = async (hre) => {
         from: signer.address,
         args: configurations[hre.network.name as keyof typeof configurations],
         log: true,
-        waitConfirmations: 1,
-        skipIfAlreadyDeployed: false,
+        waitConfirmations: 10,
+        skipIfAlreadyDeployed: true,
         contract: contractName
     })
 }
