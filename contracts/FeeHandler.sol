@@ -48,7 +48,8 @@ contract FeeHandler is IFeeHandler, Ownable {
 
     function quoteNativeFee() external view override returns (uint256 nativeFee) {
         if (quoteType == QuoteType.Oracle) {
-            nativeFee = ((10 ** aggregator.decimals()) * usdFee) / uint256(aggregator.latestAnswer());
+            (, int256 answer, , , ) = aggregator.latestRoundData();
+            nativeFee = ((10 ** aggregator.decimals()) * usdFee) / uint256(answer);
         } else if (quoteType == QuoteType.Fixed) {
             nativeFee = fixedNativeFee;
         }
