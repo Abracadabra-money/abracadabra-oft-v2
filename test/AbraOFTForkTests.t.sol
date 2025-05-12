@@ -36,6 +36,11 @@ interface IReceiveLib {
     function executorConfigs(address _oapp, uint32 _eid) external returns (ExecutorConfig memory);
 }
 
+interface IFeeHandler {
+    function setFixedNativeFee(uint256 _fixedNativeFee) external;
+    function setQuoteType(uint8) external;
+}
+
 interface ITransparentUpgradeableProxy {
     function admin() external view returns (address);
 
@@ -222,8 +227,8 @@ contract AbraForkTestBase is Test {
         } else if (block.chainid == NIBIRU_CHAIN_ID) {
             endpoint = ILayerZeroEndpointV2(ENDPOINT_NIBIRU);
             mimOft = IOFTComplete(MIM_OFT_NIBIRU);
-            mimOftPeer = MIM_OFT_NIBIRU;
-            sendingSrcEid = ETH_EID;
+            mimOftPeer = MIM_OFT_BERA;
+            sendingSrcEid = BERA_EID;
             sendingDstEid = ETH_EID;
             safe = SAFE_NIBIRU;
             sendLib = SEND_LIB_NIBIRU;
@@ -261,7 +266,7 @@ contract AbraForkTestBase is Test {
         assertEq(bSpellOft.decimalConversionRate(), 1e12);
     }
 
-    function test_oft_send_mim() public {
+    function test_oft_receive_mim() public {
         if (block.chainid == ARB_CHAIN_ID) return;
         if (block.chainid == ETH_CHAIN_ID) {
             assertEq(IERC20(mimOft.token()).balanceOf(alice), 0);
@@ -304,7 +309,7 @@ contract AbraForkTestBase is Test {
         vm.stopPrank();
     }
 
-    function test_oft_send_bspell() public {
+    function test_oft_receive_bspell() public {
         if (block.chainid == NIBIRU_CHAIN_ID) return;
         if (block.chainid == ARB_CHAIN_ID) {
             assertEq(IERC20(bSpellOft.token()).balanceOf(alice), 0);
@@ -349,7 +354,7 @@ contract AbraForkTestBase is Test {
         vm.stopPrank();
     }
 
-    function test_oft_send_spellv2() public {
+    function test_oft_receive_spellv2() public {
         if (block.chainid == NIBIRU_CHAIN_ID) return;
         if (block.chainid == ETH_CHAIN_ID) {
             assertEq(IERC20(spellV2Oft.token()).balanceOf(alice), 0);
@@ -713,8 +718,8 @@ contract AbraForkTestBase is Test {
             _verify_uln_config(ETH_EID, address(mimOft), receiveLib, ETH_CONFIRMATIONS, requiredDvns, optionalDvns, 0);
         } else if (block.chainid == NIBIRU_CHAIN_ID) {
             address[] memory requiredDvns = new address[](2);
-            requiredDvns[0] = LZ_DVN_NIBIRU;
-            requiredDvns[1] = MIM_DVN_NIBIRU;
+            requiredDvns[0] = MIM_DVN_NIBIRU;
+            requiredDvns[1] = LZ_DVN_NIBIRU;
 
             address[] memory optionalDvns = new address[](0);
 
