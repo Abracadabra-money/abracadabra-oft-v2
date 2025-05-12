@@ -72,7 +72,7 @@ const config: HardhatUserConfig = {
                 },
             },
             safeConfig: {
-                safeUrl: 'https://safe-transaction-mainnet.safe.global/',
+                safeUrl: 'https://safe-transaction-mainnet.safe.global',
                 safeAddress: ETH_SAFE_ADDRESS
             }
         },
@@ -115,7 +115,7 @@ const config: HardhatUserConfig = {
                 }
             },
             safeConfig: {
-                safeUrl: 'https://transaction.safe.berachain.com/',
+                safeUrl: 'https://transaction.safe.berachain.com',
                 safeAddress: BERA_SAFE_ADDRESS,
                 contractNetworks: {
                     // @ts-ignore
@@ -137,7 +137,7 @@ const config: HardhatUserConfig = {
                 }
             },
             safeConfig: {
-                safeUrl: 'https://transaction.safe.nibiru.fi/',
+                safeUrl: 'https://transaction.safe.nibiru.fi',
                 safeAddress: NIBI_SAFE_ADDRESS,
                 contractNetworks: {
                     // @ts-ignore

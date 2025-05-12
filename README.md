@@ -1,18 +1,22 @@
 # Requirements
+
 - Bun
 - Foundry (for testing)
 
 # Setup
+
 ```
 bun install
 ```
 
 # Compile
+
 ```
 bunx hardhat compile
 ```
 
 # Test
+
 ```
 forge test
 ```
@@ -20,12 +24,17 @@ forge test
 # How to deploy MIM OFT
 
 ## 1. Deploy FeeHandler
+
 Edit `deploy/FeeHandler.ts` and update `configurations` with the right values for the network you are deploying to.
+
 ```
 bunx hardhat deploy --network <network-name> --tags FeeHandler
 ```
 
 ## 2. Deploy MIMOFT
+
+> be sure to update the owner of the MIMOFT to the multisig address
+
 ```
 bunx hardhat lz:deploy --tags MIMOFT --networks <network-name>
 ```
@@ -33,48 +42,57 @@ bunx hardhat lz:deploy --tags MIMOFT --networks <network-name>
 > Rename the `DefaultProxyAdmin` file to `MIMOFT_ProxyAdmin`
 
 ## 3. Verify
+
 ```
 bunx hardhat etherscan-verify --network <network-name> --contract-name MIMOFT_Implementation
 bunx hardhat etherscan-verify --network <network-name> --contract-name MIMOFT_ProxyAdmin
 bunx hardhat etherscan-verify --network <network-name> --contract-name MIMOFT_FeeHandler
 ```
 
-## 4. Review
-Ask the team to review the deployment.
-
-## 5. LayerZero Wiring
+## 4. Change Endpoint Delegate To Owner
 ```
-bunx hardhat lz:oapp:wire --oapp-config layerzero.mim.config.ts [--safe (when owner is a safe)]
+cast --rpc-url <url> send <layer zero endpoint> "setDelegate(address)" <owner address>
 ```
 
-## 6. Change OFT Ownership
+## 5. Change OFT Ownership
+
 ```
 bunx hardhat lz:ownable:transfer-ownership --oapp-config layerzero.mim.config.ts
 ```
 
-## 7. Change Proxy Admin Ownership
+## 6. Change Proxy Admin Ownership
 ```
-cast --rpc-url <url> send <proxy admin address> "transferOwnership(address)" <safe address>
+cast --rpc-url <url> send <MIMOFT_ProxyAdmin address> "transferOwnership(address)" <safe address>
 ```
 
-## 8. Double check ownership
+## 7. Double check ownership
+
 Make sure the owner for all the contracts is the safe address.
+
 ```
 cast --rpc-url <url> call <layer zero endpoint> "delegates(address)(address)" <oft address>
 cast --rpc-url <url> call <oft proxy address> "owner()(address)"
 cast --rpc-url <url> call <proxy admin address> "owner()(address)"
 ```
 
-# Changing LayerZero Wiring once ownership is transferred
+## 8. Review
+
+Ask the team to review the deployment.
+
+## 9. LayerZero Wiring
+
 ```
-bunx hardhat lz:oapp:wire --oapp-config layerzero.mim.config.ts --safe <safe address>
+bunx hardhat lz:oapp:wire --oapp-config layerzero.mim.config.ts [--safe (when owner is a safe)]
 ```
 
 # EndpointV2 addresses
+
 https://docs.layerzero.network/v2/developers/evm/technical-reference/deployed-contracts
 
 # Bridging example
+
 ## MIM
+
 ```
  bunx hardhat bridge \
   --token MIM \
@@ -85,6 +103,7 @@ https://docs.layerzero.network/v2/developers/evm/technical-reference/deployed-co
 ```
 
 ## SPELL
+
 ```
 bunx hardhat bridge \
   --token SPELL \
