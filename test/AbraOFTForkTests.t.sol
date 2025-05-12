@@ -1039,14 +1039,14 @@ contract AbraForkTestBase is Test {
 
 contract AbraForkEthTest is AbraForkTestBase {
     function setUp() public override {
-        vm.createSelectFork(vm.rpcUrl("mainnet"));
+        vm.createSelectFork(vm.rpcUrl("https://ethereum-rpc.publicnode.com"));
         super.setUp();
     }
 }
 
 contract AbraForkArbitrumTest is AbraForkTestBase {
     function setUp() public override {
-        vm.createSelectFork(vm.rpcUrl("arbitrum"));
+        vm.createSelectFork(vm.rpcUrl("https://1rpc.io/arb"));
         super.setUp();
     }
 }
