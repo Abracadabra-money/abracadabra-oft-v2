@@ -1048,14 +1048,14 @@ contract AbraForkArbitrumTest is AbraForkTestBase {
 
 contract AbraForkBeraTest is AbraForkTestBase {
     function setUp() public override {
-        vm.createSelectFork("berachain");
+        vm.createSelectFork("https://rpc.berachain.com/");
         super.setUp();
     }
 }
 
 contract AbraForkNibiruTest is AbraForkTestBase {
     function setUp() public override {
-        vm.createSelectFork("https://cdn.routescan.io/api/evm/6900/rpc", 22783442);
+        vm.createSelectFork("https://cdn.routescan.io/api/evm/6900/rpc");
         super.setUp();
     }
 }
