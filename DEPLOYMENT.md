@@ -4,7 +4,7 @@
 | --------- | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ |
 | Ethereum  | 0xE5169F892000fC3BEd5660f62C67FAEE7F97718B | 0x8D2DA1C781E43ACe6B393edB9B46fe8f1a3367c8 | 0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3 |
 | Berachain | 0x5B82028cfc477C4E7ddA7FF33d59A23FA7Be002a | 0xe59b2b20bd72AF8a74c1874408ab7Dd8201Aae31 | -                                          |
-| Nibiru    | 0x7659522E575D6E03754003b23F36Edd4FD070CC3 | 0xfCfc58685101e2914cBCf7551B432500db84eAa8 | -                                          |
+| Nibiru    | 0xfCfc58685101e2914cBCf7551B432500db84eAa8 | 0xe59b2b20bd72AF8a74c1874408ab7Dd8201Aae31 | -                                          |
 
 # SPELL
 
