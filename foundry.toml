@@ -36,3 +36,4 @@ remappings = [
 mainnet = "${MAINNET_RPC_URL}"
 arbitrum = "${ARBITRUM_RPC_URL}"
 berachain = "${BERA_RPC_URL}"
+nibiru = "${NIBIRU_RPC_URL}"

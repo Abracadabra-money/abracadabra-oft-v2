@@ -31,6 +31,7 @@ export const ETH_SAFE_ADDRESS = "0xDF2C270f610Dc35d8fFDA5B453E74db5471E126B";
 export const ARB_SAFE_ADDRESS = "0xA71A021EF66B03E45E0d85590432DFCfa1b7174C";
 export const BERA_SAFE_ADDRESS = "0xa4EF0376a91872B9c5d53D10410Bdf36e6Cf4e5E";
 export const OPT_SAFE_ADDRESS = "0xCbb86ffF0F8094C370cdDb76C7F270C832a8C7C0";
+export const NIBI_SAFE_ADDRESS = "0x282dF9f8A9b1F23aEa9050A4fdEb5eEe29c2F540";
 
 const accounts: HttpNetworkAccountsUserConfig | undefined = MNEMONIC
     ? { mnemonic: MNEMONIC }
@@ -71,7 +72,7 @@ const config: HardhatUserConfig = {
                 },
             },
             safeConfig: {
-                safeUrl: 'https://safe-transaction-mainnet.safe.global/',
+                safeUrl: 'https://safe-transaction-mainnet.safe.global',
                 safeAddress: ETH_SAFE_ADDRESS
             }
         },
@@ -114,11 +115,33 @@ const config: HardhatUserConfig = {
                 }
             },
             safeConfig: {
-                safeUrl: 'https://transaction.safe.berachain.com/',
+                safeUrl: 'https://transaction.safe.berachain.com',
                 safeAddress: BERA_SAFE_ADDRESS,
                 contractNetworks: {
                     // @ts-ignore
                     '80094': {
+                        multiSendAddress: '0x38869bf66a61cF6bDB996A6aE40D5853Fd43B526',
+                        multiSendCallOnlyAddress: '0x9641d764fc13c8B624c04430C7356C1C7C8102e2',
+                    },
+                },
+            },
+        },
+        "nibiru-mainnet": {
+            eid: EndpointId.NIBIRU_V2_MAINNET,
+            url: process.env.NIBIRU_RPC_URL || '',
+            accounts,
+            verify: {
+                etherscan: {
+                    apiUrl: 'https://api.routescan.io/v2/network/mainnet/evm/6900/etherscan',
+                    apiKey: 'verifyContract',
+                }
+            },
+            safeConfig: {
+                safeUrl: 'https://transaction.safe.nibiru.fi',
+                safeAddress: NIBI_SAFE_ADDRESS,
+                contractNetworks: {
+                    // @ts-ignore
+                    '6900': {
                         multiSendAddress: '0x38869bf66a61cF6bDB996A6aE40D5853Fd43B526',
                         multiSendCallOnlyAddress: '0x9641d764fc13c8B624c04430C7356C1C7C8102e2',
                     },

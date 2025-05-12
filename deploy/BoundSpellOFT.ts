@@ -41,8 +41,8 @@ const deploy: DeployFunction = async (hre) => {
         from: signer.address,
         args: config.args(endpointV2Deployment.address),
         log: true,
-        waitConfirmations: 1,
-        skipIfAlreadyDeployed: false,
+        waitConfirmations: 10,
+        skipIfAlreadyDeployed: true,
         proxy: {
             proxyContract: 'OpenZeppelinTransparentProxy',
             owner: signer.address,

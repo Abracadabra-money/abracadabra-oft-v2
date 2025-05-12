@@ -76,6 +76,11 @@ const TOKEN_CONFIGS = {
         type: 'oft',
         contractName: 'AbraOFTUpgradeable',
         deploymentName: 'MIMOFT',
+      },
+      'nibiru-mainnet': {
+        type: 'oft',
+        contractName: 'AbraOFTUpgradeable',
+        deploymentName: 'MIMOFT',
       }
     }
   }
@@ -139,6 +144,9 @@ task("bridge", "Bridge tokens from one chain to another")
 
     // Get quote for the bridge transaction
     const quote = await oftContract.quoteSend(sendParam, false);
+    
+    // Add 5% to the fee estimate
+    const feeWithBuffer = quote.nativeFee.mul(105).div(100);
 
     // Show confirmation prompt with enhanced details
     const answers = await inquirer.prompt([{
@@ -151,7 +159,7 @@ Bridge Details:
 - Token: ${tokenSymbol}
 - Amount: ${amount} ${tokenSymbol}
 - Recipient: ${to}
-- Bridge Fee: ${formatEther(quote.nativeFee)} ${hre.network.name.includes('ethereum') ? 'ETH' : 'native token'}
+- Bridge Fee: ${formatEther(feeWithBuffer)} ${hre.network.name.includes('ethereum') ? 'ETH' : 'native token'} (includes 5% buffer)
 - OFT Contract: ${oftContract.address}
 
 Do you want to proceed?`,
@@ -166,15 +174,15 @@ Do you want to proceed?`,
     try {
       const tx = await oftContract.send(
         sendParam,
-        { nativeFee: quote.nativeFee, lzTokenFee: 0 },
+        { nativeFee: feeWithBuffer, lzTokenFee: 0 },
         sender.address,
-        { value: quote.nativeFee }
+        { value: feeWithBuffer }
       );
       await tx.wait();
 
       console.log(`Bridge transaction successful!`);
       console.log(`Transaction: https://layerzeroscan.com/tx/${tx.hash}`);
-      console.log(`Native fee paid: ${formatEther(quote.nativeFee)}`);
+      console.log(`Native fee paid: ${formatEther(feeWithBuffer)}`);
     } catch (error) {
       console.error("Error bridging tokens:", error);
       throw error;

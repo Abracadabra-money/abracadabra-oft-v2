@@ -12,12 +12,22 @@ const configurations = {
         initializeArgs: (signer: string) => [signer],
         feeHandler: '0xe4aec83Cba57E2B0b9ED8bc9801123F44f393037'
     },
+
+    // Native MIMv2
     'bera-mainnet': {
         contractName: 'AbraOFTUpgradeable',
         args: (endpointAddress: string) => [endpointAddress],
         initializeArgs: (signer: string) => ['Magic Internet Money', 'MIM', signer],
-        feeHandler: ethers.constants.AddressZero
+        feeHandler: "0x418ADe5929fb6A9E3666ab19332e70A0f0A64470"
     },
+    'nibiru-mainnet': {
+        contractName: 'AbraOFTUpgradeable',
+        args: (endpointAddress: string) => [endpointAddress],
+        initializeArgs: (signer: string) => ['Magic Internet Money', 'MIM', signer],
+        feeHandler: "0x279D54aDD72935d845074675De0dbcfdc66800a3"
+    },
+
+    // MIMv1 -> MIMv2
     'arbitrum-mainnet': {
         contractName: 'AbraOFTUpgradeableExisting',
         args: (endpointAddress: string) => [
@@ -46,8 +56,7 @@ const deploy: DeployFunction = async (hre) => {
     console.log(`deploying ${deploymentName} on network: ${hre.network.name} with ${signer.address}`)
 
     const { address, abi } = getDeploymentAddressAndAbi(hre.network.name, 'EndpointV2')
-    const endpointV2Deployment = new Contract(address, abi, signer)
-
+    const endpointV2Deployment = await hre.ethers.getContractAt(abi, address)
     const config = configurations[hre.network.name as keyof typeof configurations]
 
     const deployment = await deploy(deploymentName, {
@@ -55,8 +64,8 @@ const deploy: DeployFunction = async (hre) => {
         from: signer.address,
         args: config.args(endpointV2Deployment.address),
         log: true,
-        waitConfirmations: 1,
-        skipIfAlreadyDeployed: false,
+        waitConfirmations: 10,
+        skipIfAlreadyDeployed: true,
         proxy: {
             proxyContract: 'OpenZeppelinTransparentProxy',
             owner: signer.address,

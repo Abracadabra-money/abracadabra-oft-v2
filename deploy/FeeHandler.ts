@@ -31,6 +31,13 @@ const configurations = {
         "0x60C801e2dfd6298E6080214b3d680C8f8d698F48", // Treasury Yields
         0, // QuoteType.Oracle
         "0xCbb86ffF0F8094C370cdDb76C7F270C832a8C7C0" // Ops 
+    ],
+    "nibiru-mainnet": [
+        0, // no fixed native fee, using an oracle
+        "0x1ee4787898Fa3082e3af8a04e19450b17E97E70a", // NIBI/USD feed
+        "0x7c4483726BD26bFE9ec120dFAe62ceE7132Ce275", // Treasury Yields
+        0, // QuoteType.Oracle
+        "0x282dF9f8A9b1F23aEa9050A4fdEb5eEe29c2F540" // Ops 
     ]
 }
 
@@ -43,8 +50,8 @@ const deploy: DeployFunction = async (hre) => {
         from: signer.address,
         args: configurations[hre.network.name as keyof typeof configurations],
         log: true,
-        waitConfirmations: 1,
-        skipIfAlreadyDeployed: false,
+        waitConfirmations: 10,
+        skipIfAlreadyDeployed: true,
         contract: contractName
     })
 }
