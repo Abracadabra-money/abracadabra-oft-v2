@@ -1,0 +1,526 @@
+{
+  "address": "0x40CC67dB2713F34daCA67d93aCdeF59D3b8279a9",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_fixedNativeFee",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_aggregator",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_feeTo",
+          "type": "address"
+        },
+        {
+          "internalType": "enum QuoteType",
+          "name": "_quoteType",
+          "type": "uint8"
+        },
+        {
+          "internalType": "address",
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "enum QuoteType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "name": "InvalidQuoteType",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableInvalidOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableUnauthorizedAccount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previous",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "current",
+          "type": "address"
+        }
+      ],
+      "name": "FeeToChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "previous",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "current",
+          "type": "uint256"
+        }
+      ],
+      "name": "FixedNativeFeeChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "contract IAggregator",
+          "name": "previous",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "contract IAggregator",
+          "name": "current",
+          "type": "address"
+        }
+      ],
+      "name": "OracleImplementationChange",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "enum QuoteType",
+          "name": "previous",
+          "type": "uint8"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum QuoteType",
+          "name": "current",
+          "type": "uint8"
+        }
+      ],
+      "name": "QuoteTypeChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "previous",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "current",
+          "type": "uint256"
+        }
+      ],
+      "name": "UsdFeeChanged",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "DEFAULT_USD_FEE",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "aggregator",
+      "outputs": [
+        {
+          "internalType": "contract IAggregator",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "feeTo",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "fixedNativeFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "quoteNativeFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "nativeFee",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "quoteType",
+      "outputs": [
+        {
+          "internalType": "enum QuoteType",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IAggregator",
+          "name": "_aggregator",
+          "type": "address"
+        }
+      ],
+      "name": "setAggregator",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_feeTo",
+          "type": "address"
+        }
+      ],
+      "name": "setFeeTo",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_fixedNativeFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "setFixedNativeFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "enum QuoteType",
+          "name": "_quoteType",
+          "type": "uint8"
+        }
+      ],
+      "name": "setQuoteType",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_usdFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "setUsdFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "usdFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xb77161e48a5dd1df86fce89c680df7689dfcc8b74aab18838cfb73ffea2b9852",
+  "receipt": {
+    "to": null,
+    "from": "0xfB3485c2e209A5cfBDC1447674256578f1A80eE3",
+    "contractAddress": "0x40CC67dB2713F34daCA67d93aCdeF59D3b8279a9",
+    "transactionIndex": 0,
+    "gasUsed": "664546",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000020000000000000000000810000000000000000000000000000000400000000200000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000040000000000000000000020000000000000000000000000000000000000000000000000000000000000002000",
+    "blockHash": "0x9cd829b8104462db1c62d587c89d7907c30642a78b65d22d6d438848ebf03014",
+    "transactionHash": "0xb77161e48a5dd1df86fce89c680df7689dfcc8b74aab18838cfb73ffea2b9852",
+    "logs": [
+      {
+        "transactionIndex": 0,
+        "blockNumber": 4050856,
+        "transactionHash": "0xb77161e48a5dd1df86fce89c680df7689dfcc8b74aab18838cfb73ffea2b9852",
+        "address": "0x40CC67dB2713F34daCA67d93aCdeF59D3b8279a9",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x000000000000000000000000d402da007d49040d8639a957bb1f9921bac5816d"
+        ],
+        "data": "0x",
+        "logIndex": 0,
+        "blockHash": "0x9cd829b8104462db1c62d587c89d7907c30642a78b65d22d6d438848ebf03014"
+      }
+    ],
+    "blockNumber": 4050856,
+    "cumulativeGasUsed": "664546",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    0,
+    "0xa8a94Da411425634e3Ed6C331a32ab4fd774aa43",
+    "0x763f122c906B2D431D5Bc4d0fB04e123f6ca277d",
+    0,
+    "0xD402DA007d49040D8639A957bB1f9921bAC5816d"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "c494536c0db33f2864595986e14ea63d",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.22+commit.4fc1097e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_fixedNativeFee\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_aggregator\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_feeTo\",\"type\":\"address\"},{\"internalType\":\"enum QuoteType\",\"name\":\"_quoteType\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"enum QuoteType\",\"name\":\"\",\"type\":\"uint8\"}],\"name\":\"InvalidQuoteType\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Unauthorized\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previous\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"current\",\"type\":\"address\"}],\"name\":\"FeeToChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"previous\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"current\",\"type\":\"uint256\"}],\"name\":\"FixedNativeFeeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"contract IAggregator\",\"name\":\"previous\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"contract IAggregator\",\"name\":\"current\",\"type\":\"address\"}],\"name\":\"OracleImplementationChange\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"enum QuoteType\",\"name\":\"previous\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"enum QuoteType\",\"name\":\"current\",\"type\":\"uint8\"}],\"name\":\"QuoteTypeChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"previous\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"current\",\"type\":\"uint256\"}],\"name\":\"UsdFeeChanged\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"DEFAULT_USD_FEE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"aggregator\",\"outputs\":[{\"internalType\":\"contract IAggregator\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"feeTo\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"fixedNativeFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"quoteNativeFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"nativeFee\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"quoteType\",\"outputs\":[{\"internalType\":\"enum QuoteType\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IAggregator\",\"name\":\"_aggregator\",\"type\":\"address\"}],\"name\":\"setAggregator\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_feeTo\",\"type\":\"address\"}],\"name\":\"setFeeTo\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_fixedNativeFee\",\"type\":\"uint256\"}],\"name\":\"setFixedNativeFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"enum QuoteType\",\"name\":\"_quoteType\",\"type\":\"uint8\"}],\"name\":\"setQuoteType\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_usdFee\",\"type\":\"uint256\"}],\"name\":\"setUsdFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"usdFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"errors\":{\"OwnableInvalidOwner(address)\":[{\"details\":\"The owner is not a valid owner account. (eg. `address(0)`)\"}],\"OwnableUnauthorizedAccount(address)\":[{\"details\":\"The caller account is not authorized to perform an operation.\"}]},\"kind\":\"dev\",\"methods\":{\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/FeeHandler.sol\":\"FeeHandler\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (access/Ownable.sol)\\n\\npragma solidity ^0.8.20;\\n\\nimport {Context} from \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * The initial owner is set to the address provided by the deployer. This can\\n * later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    /**\\n     * @dev The caller account is not authorized to perform an operation.\\n     */\\n    error OwnableUnauthorizedAccount(address account);\\n\\n    /**\\n     * @dev The owner is not a valid owner account. (eg. `address(0)`)\\n     */\\n    error OwnableInvalidOwner(address owner);\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the address provided by the deployer as the initial owner.\\n     */\\n    constructor(address initialOwner) {\\n        if (initialOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(initialOwner);\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        _checkOwner();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if the sender is not the owner.\\n     */\\n    function _checkOwner() internal view virtual {\\n        if (owner() != _msgSender()) {\\n            revert OwnableUnauthorizedAccount(_msgSender());\\n        }\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby disabling any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _transferOwnership(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        if (newOwner == address(0)) {\\n            revert OwnableInvalidOwner(address(0));\\n        }\\n        _transferOwnership(newOwner);\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Internal function without access restriction.\\n     */\\n    function _transferOwnership(address newOwner) internal virtual {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.1) (utils/Context.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n\\n    function _contextSuffixLength() internal view virtual returns (uint256) {\\n        return 0;\\n    }\\n}\\n\",\"keccak256\":\"0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2\",\"license\":\"MIT\"},\"contracts/FeeHandler.sol\":{\"content\":\"// SPDX-License-Identifier: UNLICENSED\\npragma solidity ^0.8.22;\\n\\nimport { IFeeHandler } from \\\"./interfaces/IFeeHandler.sol\\\";\\nimport { IAggregator } from \\\"./interfaces/IAggregator.sol\\\";\\nimport { Ownable } from \\\"@openzeppelin/contracts/access/Ownable.sol\\\";\\n\\nenum QuoteType {\\n    Oracle,\\n    Fixed\\n}\\n\\ncontract FeeHandler is IFeeHandler, Ownable {\\n    event FixedNativeFeeChanged(uint256 previous, uint256 current);\\n    event OracleImplementationChange(IAggregator indexed previous, IAggregator indexed current);\\n    event QuoteTypeChanged(QuoteType previous, QuoteType current);\\n    event FeeToChanged(address indexed previous, address indexed current);\\n    event UsdFeeChanged(uint256 previous, uint256 current);\\n\\n    error InvalidQuoteType(QuoteType);\\n    error Unauthorized();\\n\\n    uint256 public constant DEFAULT_USD_FEE = 1e18;\\n\\n    address public override feeTo;\\n    IAggregator public aggregator;\\n    uint256 public fixedNativeFee;\\n    uint256 public usdFee;\\n    QuoteType public quoteType = QuoteType.Oracle;\\n\\n    constructor(\\n        uint256 _fixedNativeFee,\\n        address _aggregator,\\n        address _feeTo,\\n        QuoteType _quoteType,\\n        address _owner\\n    ) Ownable(_owner) {\\n        fixedNativeFee = _fixedNativeFee;\\n        aggregator = IAggregator(_aggregator);\\n        feeTo = _feeTo;\\n        quoteType = _quoteType;\\n        usdFee = DEFAULT_USD_FEE;\\n    }\\n\\n    /////////////////////////////////////////////////////////////////////////\\n    // PUBLIC\\n    /////////////////////////////////////////////////////////////////////////\\n\\n    function quoteNativeFee() external view override returns (uint256 nativeFee) {\\n        if (quoteType == QuoteType.Oracle) {\\n            (, int256 answer, , , ) = aggregator.latestRoundData();\\n            nativeFee = ((10 ** aggregator.decimals()) * usdFee) / uint256(answer);\\n        } else if (quoteType == QuoteType.Fixed) {\\n            nativeFee = fixedNativeFee;\\n        }\\n    }\\n\\n    /////////////////////////////////////////////////////////////////////////\\n    // ADMIN\\n    /////////////////////////////////////////////////////////////////////////\\n\\n    function setFixedNativeFee(uint256 _fixedNativeFee) external onlyOwner {\\n        emit FixedNativeFeeChanged(fixedNativeFee, _fixedNativeFee);\\n        fixedNativeFee = _fixedNativeFee;\\n    }\\n\\n    function setAggregator(IAggregator _aggregator) external onlyOwner {\\n        emit OracleImplementationChange(aggregator, _aggregator);\\n        aggregator = _aggregator;\\n    }\\n\\n    function setUsdFee(uint256 _usdFee) external onlyOwner {\\n        emit UsdFeeChanged(usdFee, _usdFee);\\n        usdFee = _usdFee;\\n    }\\n\\n    function setQuoteType(QuoteType _quoteType) external onlyOwner {\\n        if (_quoteType > QuoteType.Fixed) {\\n            revert InvalidQuoteType(_quoteType);\\n        }\\n        emit QuoteTypeChanged(quoteType, _quoteType);\\n        quoteType = _quoteType;\\n    }\\n\\n    function setFeeTo(address _feeTo) external onlyOwner {\\n        emit FeeToChanged(feeTo, _feeTo);\\n        feeTo = _feeTo;\\n    }\\n}\\n\",\"keccak256\":\"0xbb7c43c7c16d7b29e499795b5d2c96ee195c8fa4d22e4ffcf4787f7e466dbde6\",\"license\":\"UNLICENSED\"},\"contracts/interfaces/IAggregator.sol\":{\"content\":\"// SPDX-License-Identifier: UNLICENSED\\npragma solidity ^0.8.22;\\n\\ninterface IAggregator {\\n    function decimals() external view returns (uint8);\\n\\n    function latestAnswer() external view returns (int256 answer);\\n\\n    function latestRoundData()\\n        external\\n        view\\n        returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound);\\n}\\n\",\"keccak256\":\"0x29366529a2eb7c59400c28213c175ac0d9d1648155593811c8648974c37ce942\",\"license\":\"UNLICENSED\"},\"contracts/interfaces/IFeeHandler.sol\":{\"content\":\"// SPDX-License-Identifier: UNLICENSED\\npragma solidity ^0.8.22;\\n\\ninterface IFeeHandler {\\n    function feeTo() external view returns (address);\\n\\n    function quoteNativeFee() external view returns (uint256 feeAmount);\\n}\\n\",\"keccak256\":\"0x71a2ddb33432d08f37634931a9993b15b2e481aef151b2a3fea18055dad8bedd\",\"license\":\"UNLICENSED\"}},\"version\":1}",
+  "bytecode": "0x60806040526005805460ff1916905534801561001a57600080fd5b50604051610b04380380610b0483398101604081905261003991610163565b806001600160a01b03811661006857604051631e4fbdf760e01b81526000600482015260240160405180910390fd5b610071816100e1565b506003859055600280546001600160a01b038087166001600160a01b031992831617909255600180549286169290911691909117815560058054849260ff199091169083818111156100c5576100c5610131565b021790555050670de0b6b3a7640000600455506101c792505050565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b634e487b7160e01b600052602160045260246000fd5b80516001600160a01b038116811461015e57600080fd5b919050565b600080600080600060a0868803121561017b57600080fd5b8551945061018b60208701610147565b935061019960408701610147565b92506060860151600281106101ad57600080fd5b91506101bb60808701610147565b90509295509295909350565b61092e806101d66000396000f3fe608060405234801561001057600080fd5b50600436106100f55760003560e01c8063a28598d411610097578063dbdaad3a11610066578063dbdaad3a146101cf578063f2fde38b146101e2578063f46901ed146101f5578063f9120af61461020857600080fd5b8063a28598d41461019b578063a626b852146101ae578063bf01fb1c146101b7578063cbe95f8d146101c057600080fd5b806355929b7e116100d357806355929b7e146101535780636d0f18c41461016d578063715018a6146101825780638da5cb5b1461018a57600080fd5b8063017e7e58146100fa5780630199ca6c1461012a578063245a7bfc14610140575b600080fd5b60015461010d906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b61013261021b565b604051908152602001610121565b60025461010d906001600160a01b031681565b6005546101609060ff1681565b6040516101219190610682565b61018061017b366004610696565b610374565b005b6101806103bd565b6000546001600160a01b031661010d565b6101806101a9366004610696565b6103d1565b61013260045481565b61013260035481565b610132670de0b6b3a764000081565b6101806101dd3660046106af565b61041a565b6101806101f03660046106ec565b6104c7565b6101806102033660046106ec565b610505565b6101806102163660046106ec565b610569565b60008060055460ff1660018111156102355761023561064a565b0361034e5760025460408051633fabe5a360e21b815290516000926001600160a01b03169163feaf968c9160048083019260a09291908290030181865afa158015610284573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906102a89190610728565b50505091505080600454600260009054906101000a90046001600160a01b03166001600160a01b031663313ce5676040518163ffffffff1660e01b8152600401602060405180830381865afa158015610305573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906103299190610778565b61033490600a610895565b61033e91906108a4565b61034891906108bb565b91505090565b600160055460ff1660018111156103675761036761064a565b0361037157506003545b90565b61037c6105cd565b60035460408051918252602082018390527fd2691ead0fe9165109ac7ded51e4f468778ed26f01abcc871236cd4686941419910160405180910390a1600355565b6103c56105cd565b6103cf60006105fa565b565b6103d96105cd565b60045460408051918252602082018390527f737fae213b311af43116139f6a9c40715fbf155b4c8d6ec2a4752a34a1059d1c910160405180910390a1600455565b6104226105cd565b60018160018111156104365761043661064a565b1115610460578060405163d05ccdf360e01b81526004016104579190610682565b60405180910390fd5b6005546040517f2c9b1fccb027a251c852a6e50626d821d4ceed3e0cde8930ae9cfe1bccd7a0ac916104999160ff9091169084906108dd565b60405180910390a16005805482919060ff1916600183818111156104bf576104bf61064a565b021790555050565b6104cf6105cd565b6001600160a01b0381166104f957604051631e4fbdf760e01b815260006004820152602401610457565b610502816105fa565b50565b61050d6105cd565b6001546040516001600160a01b038084169216907f82b35d45c357f923889a214ea247bfd97c31805b21391e139b94c750134b29bc90600090a3600180546001600160a01b0319166001600160a01b0392909216919091179055565b6105716105cd565b6002546040516001600160a01b038084169216907fd3094940c7dab2a5dc12d9ff0eb4aa41b5d6ca911fc4fa79771b4d9e39722f7590600090a3600280546001600160a01b0319166001600160a01b0392909216919091179055565b6000546001600160a01b031633146103cf5760405163118cdaa760e01b8152336004820152602401610457565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b634e487b7160e01b600052602160045260246000fd5b6002811061067e57634e487b7160e01b600052602160045260246000fd5b9052565b602081016106908284610660565b92915050565b6000602082840312156106a857600080fd5b5035919050565b6000602082840312156106c157600080fd5b8135600281106106d057600080fd5b9392505050565b6001600160a01b038116811461050257600080fd5b6000602082840312156106fe57600080fd5b81356106d0816106d7565b805169ffffffffffffffffffff8116811461072357600080fd5b919050565b600080600080600060a0868803121561074057600080fd5b61074986610709565b945060208601519350604086015192506060860151915061076c60808701610709565b90509295509295909350565b60006020828403121561078a57600080fd5b815160ff811681146106d057600080fd5b634e487b7160e01b600052601160045260246000fd5b600181815b808511156107ec5781600019048211156107d2576107d261079b565b808516156107df57918102915b93841c93908002906107b6565b509250929050565b60008261080357506001610690565b8161081057506000610690565b816001811461082657600281146108305761084c565b6001915050610690565b60ff8411156108415761084161079b565b50506001821b610690565b5060208310610133831016604e8410600b841016171561086f575081810a610690565b61087983836107b1565b806000190482111561088d5761088d61079b565b029392505050565b60006106d060ff8416836107f4565b80820281158282048414176106905761069061079b565b6000826108d857634e487b7160e01b600052601260045260246000fd5b500490565b604081016108eb8285610660565b6106d0602083018461066056fea2646970667358221220340b332765239e47663e019f266423448311e99f7bba6bed1b6f7184398b3c2764736f6c63430008160033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100f55760003560e01c8063a28598d411610097578063dbdaad3a11610066578063dbdaad3a146101cf578063f2fde38b146101e2578063f46901ed146101f5578063f9120af61461020857600080fd5b8063a28598d41461019b578063a626b852146101ae578063bf01fb1c146101b7578063cbe95f8d146101c057600080fd5b806355929b7e116100d357806355929b7e146101535780636d0f18c41461016d578063715018a6146101825780638da5cb5b1461018a57600080fd5b8063017e7e58146100fa5780630199ca6c1461012a578063245a7bfc14610140575b600080fd5b60015461010d906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b61013261021b565b604051908152602001610121565b60025461010d906001600160a01b031681565b6005546101609060ff1681565b6040516101219190610682565b61018061017b366004610696565b610374565b005b6101806103bd565b6000546001600160a01b031661010d565b6101806101a9366004610696565b6103d1565b61013260045481565b61013260035481565b610132670de0b6b3a764000081565b6101806101dd3660046106af565b61041a565b6101806101f03660046106ec565b6104c7565b6101806102033660046106ec565b610505565b6101806102163660046106ec565b610569565b60008060055460ff1660018111156102355761023561064a565b0361034e5760025460408051633fabe5a360e21b815290516000926001600160a01b03169163feaf968c9160048083019260a09291908290030181865afa158015610284573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906102a89190610728565b50505091505080600454600260009054906101000a90046001600160a01b03166001600160a01b031663313ce5676040518163ffffffff1660e01b8152600401602060405180830381865afa158015610305573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906103299190610778565b61033490600a610895565b61033e91906108a4565b61034891906108bb565b91505090565b600160055460ff1660018111156103675761036761064a565b0361037157506003545b90565b61037c6105cd565b60035460408051918252602082018390527fd2691ead0fe9165109ac7ded51e4f468778ed26f01abcc871236cd4686941419910160405180910390a1600355565b6103c56105cd565b6103cf60006105fa565b565b6103d96105cd565b60045460408051918252602082018390527f737fae213b311af43116139f6a9c40715fbf155b4c8d6ec2a4752a34a1059d1c910160405180910390a1600455565b6104226105cd565b60018160018111156104365761043661064a565b1115610460578060405163d05ccdf360e01b81526004016104579190610682565b60405180910390fd5b6005546040517f2c9b1fccb027a251c852a6e50626d821d4ceed3e0cde8930ae9cfe1bccd7a0ac916104999160ff9091169084906108dd565b60405180910390a16005805482919060ff1916600183818111156104bf576104bf61064a565b021790555050565b6104cf6105cd565b6001600160a01b0381166104f957604051631e4fbdf760e01b815260006004820152602401610457565b610502816105fa565b50565b61050d6105cd565b6001546040516001600160a01b038084169216907f82b35d45c357f923889a214ea247bfd97c31805b21391e139b94c750134b29bc90600090a3600180546001600160a01b0319166001600160a01b0392909216919091179055565b6105716105cd565b6002546040516001600160a01b038084169216907fd3094940c7dab2a5dc12d9ff0eb4aa41b5d6ca911fc4fa79771b4d9e39722f7590600090a3600280546001600160a01b0319166001600160a01b0392909216919091179055565b6000546001600160a01b031633146103cf5760405163118cdaa760e01b8152336004820152602401610457565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b634e487b7160e01b600052602160045260246000fd5b6002811061067e57634e487b7160e01b600052602160045260246000fd5b9052565b602081016106908284610660565b92915050565b6000602082840312156106a857600080fd5b5035919050565b6000602082840312156106c157600080fd5b8135600281106106d057600080fd5b9392505050565b6001600160a01b038116811461050257600080fd5b6000602082840312156106fe57600080fd5b81356106d0816106d7565b805169ffffffffffffffffffff8116811461072357600080fd5b919050565b600080600080600060a0868803121561074057600080fd5b61074986610709565b945060208601519350604086015192506060860151915061076c60808701610709565b90509295509295909350565b60006020828403121561078a57600080fd5b815160ff811681146106d057600080fd5b634e487b7160e01b600052601160045260246000fd5b600181815b808511156107ec5781600019048211156107d2576107d261079b565b808516156107df57918102915b93841c93908002906107b6565b509250929050565b60008261080357506001610690565b8161081057506000610690565b816001811461082657600281146108305761084c565b6001915050610690565b60ff8411156108415761084161079b565b50506001821b610690565b5060208310610133831016604e8410600b841016171561086f575081810a610690565b61087983836107b1565b806000190482111561088d5761088d61079b565b029392505050565b60006106d060ff8416836107f4565b80820281158282048414176106905761069061079b565b6000826108d857634e487b7160e01b600052601260045260246000fd5b500490565b604081016108eb8285610660565b6106d0602083018461066056fea2646970667358221220340b332765239e47663e019f266423448311e99f7bba6bed1b6f7184398b3c2764736f6c63430008160033",
+  "devdoc": {
+    "errors": {
+      "OwnableInvalidOwner(address)": [
+        {
+          "details": "The owner is not a valid owner account. (eg. `address(0)`)"
+        }
+      ],
+      "OwnableUnauthorizedAccount(address)": [
+        {
+          "details": "The caller account is not authorized to perform an operation."
+        }
+      ]
+    },
+    "kind": "dev",
+    "methods": {
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 5702,
+        "contract": "contracts/FeeHandler.sol:FeeHandler",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 7208,
+        "contract": "contracts/FeeHandler.sol:FeeHandler",
+        "label": "feeTo",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_address"
+      },
+      {
+        "astId": 7211,
+        "contract": "contracts/FeeHandler.sol:FeeHandler",
+        "label": "aggregator",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_contract(IAggregator)7617"
+      },
+      {
+        "astId": 7213,
+        "contract": "contracts/FeeHandler.sol:FeeHandler",
+        "label": "fixedNativeFee",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 7215,
+        "contract": "contracts/FeeHandler.sol:FeeHandler",
+        "label": "usdFee",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 7220,
+        "contract": "contracts/FeeHandler.sol:FeeHandler",
+        "label": "quoteType",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_enum(QuoteType)7157"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_contract(IAggregator)7617": {
+        "encoding": "inplace",
+        "label": "contract IAggregator",
+        "numberOfBytes": "20"
+      },
+      "t_enum(QuoteType)7157": {
+        "encoding": "inplace",
+        "label": "enum QuoteType",
+        "numberOfBytes": "1"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

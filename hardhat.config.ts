@@ -86,7 +86,7 @@ const config: HardhatUserConfig = {
                 }
             },
             safeConfig: {
-                safeUrl: 'https://safe-transaction-arbitrum.safe.global', 
+                safeUrl: 'https://safe-transaction-arbitrum.safe.global',
                 safeAddress: ARB_SAFE_ADDRESS
             }
         },
@@ -100,7 +100,7 @@ const config: HardhatUserConfig = {
                 }
             },
             safeConfig: {
-                safeUrl: 'TODO', 
+                safeUrl: 'TODO',
                 safeAddress: OPT_SAFE_ADDRESS
             }
         },
@@ -144,6 +144,22 @@ const config: HardhatUserConfig = {
                     '6900': {
                         multiSendAddress: '0x38869bf66a61cF6bDB996A6aE40D5853Fd43B526',
                         multiSendCallOnlyAddress: '0x9641d764fc13c8B624c04430C7356C1C7C8102e2',
+                    },
+                },
+            },
+        },
+        "hyperliquid-mainnet": {
+            eid: EndpointId.HYPERLIQUID_V2_MAINNET,
+            url: process.env.HYPERLIQUID_RPC_URL || '',
+            accounts,
+            safeConfig: {
+                safeUrl: 'https://safe-cgw.onchainden.com/api',
+                safeAddress: NIBI_SAFE_ADDRESS,
+                contractNetworks: {
+                    // @ts-ignore
+                    '999': {
+                        multiSendAddress: '0x998739BFdAAdde7C933B942a68053933098f9EDa',
+                        multiSendCallOnlyAddress: '0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B',
                     },
                 },
             },

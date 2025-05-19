@@ -85,6 +85,11 @@ Ask the team to review the deployment.
 bunx hardhat lz:oapp:wire --oapp-config layerzero.mim.config.ts [--safe (when owner is a safe)]
 ```
 
+# Verify on Hyperliquid
+```
+bunx hardhat --network hyperliquid-mainnet sourcify --endpoint "https://sourcify.parsec.finance"
+```
+
 # EndpointV2 addresses
 
 https://docs.layerzero.network/v2/developers/evm/technical-reference/deployed-contracts
