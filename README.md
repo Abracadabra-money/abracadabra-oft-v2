@@ -49,9 +49,19 @@ bunx hardhat etherscan-verify --network <network-name> --contract-name MIMOFT_Pr
 bunx hardhat etherscan-verify --network <network-name> --contract-name MIMOFT_FeeHandler
 ```
 
+> On Hyperliquid it should be sourcify:
+```
+bunx hardhat sourcify --endpoint "https://sourcify.parsec.finance"
+```
+
 ## 4. Change Endpoint Delegate To Owner
 ```
-cast --rpc-url <url> send <layer zero endpoint> "setDelegate(address)" <owner address>
+cast --rpc-url <url> send <oft proxy address> "setDelegate(address)" <owner address>
+```
+
+Double check the delegate is set to the owner.
+```
+cast --rpc-url <url> call <layer zero endpoint> "delegates(address)(address)" <oft address>
 ```
 
 ## 5. Change OFT Ownership
@@ -60,34 +70,29 @@ cast --rpc-url <url> send <layer zero endpoint> "setDelegate(address)" <owner ad
 bunx hardhat lz:ownable:transfer-ownership --oapp-config layerzero.mim.config.ts
 ```
 
+Double check the owner is the safe address.
+```
+cast --rpc-url <url> call <oft proxy address> "owner()(address)"
+```
+
 ## 6. Change Proxy Admin Ownership
 ```
 cast --rpc-url <url> send <MIMOFT_ProxyAdmin address> "transferOwnership(address)" <safe address>
 ```
 
-## 7. Double check ownership
-
-Make sure the owner for all the contracts is the safe address.
-
+Double check the owner is the safe address.
 ```
-cast --rpc-url <url> call <layer zero endpoint> "delegates(address)(address)" <oft address>
-cast --rpc-url <url> call <oft proxy address> "owner()(address)"
-cast --rpc-url <url> call <proxy admin address> "owner()(address)"
+cast --rpc-url <url> call <MIMOFT_ProxyAdmin address> "owner()(address)"
 ```
 
-## 8. Review
+## 7. Review
 
 Ask the team to review the deployment.
 
-## 9. LayerZero Wiring
+## 8. LayerZero Wiring
 
 ```
 bunx hardhat lz:oapp:wire --oapp-config layerzero.mim.config.ts [--safe (when owner is a safe)]
-```
-
-# Verify on Hyperliquid
-```
-bunx hardhat --network hyperliquid-mainnet sourcify --endpoint "https://sourcify.parsec.finance"
 ```
 
 # EndpointV2 addresses

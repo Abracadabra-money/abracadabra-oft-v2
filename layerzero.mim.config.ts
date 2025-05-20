@@ -2,7 +2,7 @@ import { ExecutorOptionType } from "@layerzerolabs/lz-v2-utilities";
 import { OAppEdgeConfig, OAppEnforcedOption, OmniEdgeHardhat, OmniPointHardhat } from "@layerzerolabs/toolbox-hardhat";
 import { EndpointId } from "@layerzerolabs/lz-definitions";
 import { generateConnectionsConfig } from "@layerzerolabs/metadata-tools";
-import { ETH_SAFE_ADDRESS, BERA_SAFE_ADDRESS, NIBI_SAFE_ADDRESS } from "./hardhat.config";
+import { ETH_SAFE_ADDRESS, BERA_SAFE_ADDRESS, NIBI_SAFE_ADDRESS, HYPER_SAFE_ADDRESS } from "./hardhat.config";
 
 const ethereumContract: OmniPointHardhat = {
     eid: EndpointId.ETHEREUM_V2_MAINNET,
@@ -21,6 +21,11 @@ const beraContract: OmniPointHardhat = {
 
 const nibiruContract: OmniPointHardhat = {
     eid: EndpointId.NIBIRU_V2_MAINNET,
+    contractName: 'MIMOFT',
+}
+
+const hyperContract: OmniPointHardhat = {
+    eid: EndpointId.HYPERLIQUID_V2_MAINNET,
     contractName: 'MIMOFT',
 }
 
@@ -53,8 +58,11 @@ export default async function () {
         [ethereumContract, beraContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
         [ethereumContract, nibiruContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
         [beraContract, nibiruContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
-
-        // MIMv2 Arbitrum
+        [ethereumContract, hyperContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+        [hyperContract, beraContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+        [hyperContract, nibiruContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+        
+        // MIMv2 Arbitrum Migration
         //[ethereumContract, arbitrumContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
         //[arbitrumContract, beraContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
         //[arbitrumContract, nibiruContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
@@ -95,6 +103,14 @@ export default async function () {
                 config: {
                     owner: NIBI_SAFE_ADDRESS,
                     delegate: NIBI_SAFE_ADDRESS,
+                },
+            },
+            // MIM Hyperliquid
+            {
+                contract: hyperContract,
+                config: {
+                    owner: HYPER_SAFE_ADDRESS,
+                    delegate: HYPER_SAFE_ADDRESS,
                 },
             },
         ],

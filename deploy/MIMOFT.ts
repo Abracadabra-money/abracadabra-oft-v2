@@ -32,7 +32,7 @@ const configurations = {
     'hyperliquid-mainnet': {
         contractName: 'AbraOFTHyperliquidUpgradeable',
         args: (endpointAddress: string) => [endpointAddress],
-        initializeArgs: (signer: string) => [signer],
+        initializeArgs: (signer: string) => ['Magic Internet Money', 'MIM', signer],
         feeHandler: "0x40CC67dB2713F34daCA67d93aCdeF59D3b8279a9",
         useDeterministicDeployment: false
     },
