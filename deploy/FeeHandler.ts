@@ -38,6 +38,13 @@ const configurations = {
         "0x7c4483726BD26bFE9ec120dFAe62ceE7132Ce275", // Treasury Yields
         0, // QuoteType.Oracle
         "0x282dF9f8A9b1F23aEa9050A4fdEb5eEe29c2F540" // Ops 
+    ],
+    "hyperliquid-mainnet": [
+        0, // no fixed native fee, using an oracle
+        "0xa8a94Da411425634e3Ed6C331a32ab4fd774aa43", // HYPE/USD feed
+        "0x763f122c906B2D431D5Bc4d0fB04e123f6ca277d", // Treasury Yields
+        0, // QuoteType.Oracle
+        "0xD402DA007d49040D8639A957bB1f9921bAC5816d" // Ops 
     ]
 }
 
