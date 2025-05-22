@@ -155,7 +155,7 @@ const config: HardhatUserConfig = {
             accounts,
             safeConfig: {
                 safeUrl: 'https://safe-cgw.onchainden.com/api',
-                safeAddress: NIBI_SAFE_ADDRESS,
+                safeAddress: HYPER_SAFE_ADDRESS,
                 contractNetworks: {
                     // @ts-ignore
                     '999': {
