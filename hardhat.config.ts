@@ -32,6 +32,7 @@ export const ARB_SAFE_ADDRESS = "0xA71A021EF66B03E45E0d85590432DFCfa1b7174C";
 export const BERA_SAFE_ADDRESS = "0xa4EF0376a91872B9c5d53D10410Bdf36e6Cf4e5E";
 export const OPT_SAFE_ADDRESS = "0xCbb86ffF0F8094C370cdDb76C7F270C832a8C7C0";
 export const NIBI_SAFE_ADDRESS = "0x282dF9f8A9b1F23aEa9050A4fdEb5eEe29c2F540";
+export const HYPER_SAFE_ADDRESS = "0xD402DA007d49040D8639A957bB1f9921bAC5816d";
 
 const accounts: HttpNetworkAccountsUserConfig | undefined = MNEMONIC
     ? { mnemonic: MNEMONIC }
@@ -86,7 +87,7 @@ const config: HardhatUserConfig = {
                 }
             },
             safeConfig: {
-                safeUrl: 'https://safe-transaction-arbitrum.safe.global', 
+                safeUrl: 'https://safe-transaction-arbitrum.safe.global',
                 safeAddress: ARB_SAFE_ADDRESS
             }
         },
@@ -100,7 +101,7 @@ const config: HardhatUserConfig = {
                 }
             },
             safeConfig: {
-                safeUrl: 'TODO', 
+                safeUrl: 'TODO',
                 safeAddress: OPT_SAFE_ADDRESS
             }
         },
@@ -144,6 +145,22 @@ const config: HardhatUserConfig = {
                     '6900': {
                         multiSendAddress: '0x38869bf66a61cF6bDB996A6aE40D5853Fd43B526',
                         multiSendCallOnlyAddress: '0x9641d764fc13c8B624c04430C7356C1C7C8102e2',
+                    },
+                },
+            },
+        },
+        "hyperliquid-mainnet": {
+            eid: EndpointId.HYPERLIQUID_V2_MAINNET,
+            url: process.env.HYPERLIQUID_RPC_URL || '',
+            accounts,
+            safeConfig: {
+                safeUrl: 'https://safe-transaction-hyperevm.onchainden.com',
+                safeAddress: HYPER_SAFE_ADDRESS,
+                contractNetworks: {
+                    // @ts-ignore
+                    '999': {
+                        multiSendAddress: '0x998739BFdAAdde7C933B942a68053933098f9EDa',
+                        multiSendCallOnlyAddress: '0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B',
                     },
                 },
             },
