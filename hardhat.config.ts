@@ -154,7 +154,7 @@ const config: HardhatUserConfig = {
             url: process.env.HYPERLIQUID_RPC_URL || '',
             accounts,
             safeConfig: {
-                safeUrl: 'https://safe-cgw.onchainden.com/api',
+                safeUrl: 'https://safe-transaction-hyperevm.onchainden.com',
                 safeAddress: HYPER_SAFE_ADDRESS,
                 contractNetworks: {
                     // @ts-ignore

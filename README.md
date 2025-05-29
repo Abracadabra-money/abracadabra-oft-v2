@@ -91,8 +91,10 @@ Ask the team to review the deployment.
 
 ## 8. LayerZero Wiring
 
+> be sure the safe api endpoint is the right transaction api one.
+> For example, appending `/api/v1/safes/<safe address>/` should not fail.
 ```
-bunx hardhat lz:oapp:wire --oapp-config layerzero.mim.config.ts [--safe (when owner is a safe)]
+bunx hardhat lz:oapp:wire --oapp-config layerzero.mim.config.ts --safe <safe address>
 ```
 
 # EndpointV2 addresses

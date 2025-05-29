@@ -58,9 +58,9 @@ export default async function () {
         [ethereumContract, beraContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
         [ethereumContract, nibiruContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
         [beraContract, nibiruContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
-        [ethereumContract, hyperContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
-        [hyperContract, beraContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
-        [hyperContract, nibiruContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+        [ethereumContract, hyperContract, [['LayerZero Labs', 'MIM'], []], [15, 40], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+        [hyperContract, beraContract, [['LayerZero Labs', 'MIM'], []], [40, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+        [hyperContract, nibiruContract, [['LayerZero Labs', 'MIM'], []], [40, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
         
         // MIMv2 Arbitrum Migration
         //[ethereumContract, arbitrumContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
