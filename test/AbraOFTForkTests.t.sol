@@ -155,6 +155,7 @@ contract AbraForkTestBase is Test {
 
     address constant ENDPOINT_NIBIRU = 0x2a5E79DEE6E3544588BB3b675B1Cc3354Df2AEFD;
     address constant MIM_OFT_NIBIRU = 0xfCfc58685101e2914cBCf7551B432500db84eAa8;
+    address constant SPELLV2_OFT_NIBIRU = 0x1D63c9409bb41b2Ab43259b843fF32c839A9ffa2;
     address constant SAFE_NIBIRU = 0x282dF9f8A9b1F23aEa9050A4fdEb5eEe29c2F540;
     uint32 constant NIBIRU_EID = 30369;
     uint64 constant NIBIRU_CONFIRMATIONS = 20;
@@ -247,6 +248,8 @@ contract AbraForkTestBase is Test {
             safe = SAFE_NIBIRU;
             sendLib = SEND_LIB_NIBIRU;
             receiveLib = RECEIVE_LIB_NIBIRU;
+            spellV2Oft = IOFTComplete(SPELLV2_OFT_NIBIRU);
+            spellV2OftPeer = SPELLV2_OFT_BERA;
         } else if (block.chainid == HYPER_CHAIN_ID) {
             endpoint = ILayerZeroEndpointV2(ENDPOINT_HYPER);
             mimOft = IOFTComplete(MIM_OFT_HYPER);
@@ -271,7 +274,7 @@ contract AbraForkTestBase is Test {
             assertEq(mimOft.decimalConversionRate(), 1e12);
         }
 
-        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
+        if (block.chainid == HYPER_CHAIN_ID) return;
 
         assertEq(spellV2Oft.sharedDecimals(), 6);
         if (block.chainid != ETH_CHAIN_ID) {
@@ -281,6 +284,7 @@ contract AbraForkTestBase is Test {
         assertEq(spellV2Oft.decimalConversionRate(), 1e12);
 
 
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         assertEq(bSpellOft.sharedDecimals(), 6);
         if (block.chainid != ARB_CHAIN_ID) {
             // Adapter contract on ARB
@@ -378,7 +382,7 @@ contract AbraForkTestBase is Test {
     }
 
     function test_oft_receive_spellv2() public {
-        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
+        if (block.chainid == HYPER_CHAIN_ID) return;
         if (block.chainid == ETH_CHAIN_ID) {
             assertEq(IERC20(spellV2Oft.token()).balanceOf(alice), 0);
         } else {
@@ -397,6 +401,8 @@ contract AbraForkTestBase is Test {
 
         assertEq(10 * 10 ** sharedDecimals, tenTokensSD);
 
+        // TODO: Uncomment after wired
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         vm.startPrank(address(endpoint));
         (bytes memory message, ) = OFTMsgCodec.encode(
             OFTComposeMsgCodec.addressToBytes32(address(alice)),
@@ -426,11 +432,12 @@ contract AbraForkTestBase is Test {
             mimOft.initialize("", "", address(0));
         }
 
-        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
+        if (block.chainid == HYPER_CHAIN_ID) return;
 
         vm.expectRevert();
         spellV2Oft.initialize("", "", address(0));
 
+        if (block.chainid == NIBIRU_CHAIN_ID) return;
         vm.expectRevert();
         bSpellOft.initialize("", "", address(0));
     }
@@ -448,7 +455,7 @@ contract AbraForkTestBase is Test {
             implementationMim.initialize("XX", "XX", alice);
         }
 
-        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
+        if (block.chainid == HYPER_CHAIN_ID) return;
 
         address proxyAdminSpell = address(uint160(uint256(vm.load(address(spellV2Oft), PROXY_ADMIN_SLOT))));
 
@@ -460,6 +467,7 @@ contract AbraForkTestBase is Test {
         vm.expectRevert();
         implementationSpell.initialize("XX", "XX", alice);
 
+        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
         address proxyAdminBSpell = address(uint160(uint256(vm.load(address(bSpellOft), PROXY_ADMIN_SLOT))));
 
         vm.prank(proxyAdminBSpell);
@@ -509,7 +517,7 @@ contract AbraForkTestBase is Test {
     }
 
     function test_quote_oft_spellV2() public {
-        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
+        if (block.chainid == HYPER_CHAIN_ID) return;
         uint256 mimDecimalConversionRate = spellV2Oft.decimalConversionRate();
         uint256 sharedDecimals = spellV2Oft.sharedDecimals();
         uint256 localDecimals;
@@ -685,11 +693,12 @@ contract AbraForkTestBase is Test {
             Ownable proxyAdminMim = Ownable(address(uint160(uint256(vm.load(address(mimOft), PROXY_ADMIN_SLOT)))));
             assertEq(proxyAdminMim.owner(), safe);
         }
-        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
+        if (block.chainid == HYPER_CHAIN_ID) return;
 
         Ownable proxyAdminSpellV2 = Ownable(address(uint160(uint256(vm.load(address(spellV2Oft), PROXY_ADMIN_SLOT)))));
         assertEq(proxyAdminSpellV2.owner(), safe);
 
+        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
         Ownable proxyAdminBSpell = Ownable(address(uint160(uint256(vm.load(address(bSpellOft), PROXY_ADMIN_SLOT)))));
         assertEq(proxyAdminBSpell.owner(), safe);
     }
@@ -698,8 +707,9 @@ contract AbraForkTestBase is Test {
         if (block.chainid != ARB_CHAIN_ID) {
             assertEq(Ownable(address(mimOft)).owner(), safe);
         }
-        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
+        if (block.chainid == HYPER_CHAIN_ID) return;
         assertEq(Ownable(address(spellV2Oft)).owner(), safe);
+        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
         assertEq(Ownable(address(bSpellOft)).owner(), safe);
     }
 
@@ -707,8 +717,9 @@ contract AbraForkTestBase is Test {
         if (block.chainid != ARB_CHAIN_ID) {
             assertEq(ILayerZeroEndpointDelegateable(address(endpoint)).delegates(address(mimOft)), safe);
         }
-        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
+        if (block.chainid == HYPER_CHAIN_ID) return;
         assertEq(ILayerZeroEndpointDelegateable(address(endpoint)).delegates(address(spellV2Oft)), safe);
+        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
         assertEq(ILayerZeroEndpointDelegateable(address(endpoint)).delegates(address(bSpellOft)), safe);
     }
 
@@ -716,8 +727,9 @@ contract AbraForkTestBase is Test {
         if (block.chainid != ARB_CHAIN_ID) {
             assertEq(mimOft.msgInspector(), address(0));
         }
-        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
+        if (block.chainid == HYPER_CHAIN_ID) return;
         assertEq(spellV2Oft.msgInspector(), address(0));
+        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
         assertEq(bSpellOft.msgInspector(), address(0));
     }
 
@@ -877,7 +889,7 @@ contract AbraForkTestBase is Test {
     }
 
     function test_oft_config_spellv2() public view {
-        if (block.chainid == NIBIRU_CHAIN_ID || block.chainid == HYPER_CHAIN_ID) return;
+        if (block.chainid == HYPER_CHAIN_ID) return;
         if (block.chainid == ETH_CHAIN_ID) {
             address[] memory requiredDvns = new address[](2);
             requiredDvns[0] = MIM_DVN_ETH;
@@ -1000,6 +1012,63 @@ contract AbraForkTestBase is Test {
                 optionalDvns,
                 0
             );
+        }
+        else if (block.chainid == NIBIRU_CHAIN_ID) {
+            address[] memory requiredDvns = new address[](2);
+            requiredDvns[0] = LZ_DVN_NIBIRU;
+            requiredDvns[1] = MIM_DVN_NIBIRU;
+
+            address[] memory optionalDvns = new address[](0);
+
+            // _verify_uln_config(
+            //     ETH_EID,
+            //     address(spellV2Oft),
+            //     sendLib,
+            //     NIBIRU_CONFIRMATIONS,
+            //     requiredDvns,
+            //     optionalDvns,
+            //     0
+            // );
+
+            // _verify_uln_config(
+            //     ARB_EID,
+            //     address(spellV2Oft),
+            //     sendLib,
+            //     NIBIRU_CONFIRMATIONS,
+            //     requiredDvns,
+            //     optionalDvns,
+            //     0
+            // );
+
+            // _verify_uln_config(
+            //     BERA_EID,
+            //     address(spellV2Oft),
+            //     sendLib,
+            //     NIBIRU_CONFIRMATIONS,
+            //     requiredDvns,
+            //     optionalDvns,
+            //     0
+            // );
+
+            // _verify_uln_config(
+            //     ETH_EID,
+            //     address(spellV2Oft),
+            //     receiveLib,
+            //     ETH_CONFIRMATIONS,
+            //     requiredDvns,
+            //     optionalDvns,
+            //     0
+            // );
+
+            // _verify_uln_config(
+            //     ARB_EID,
+            //     address(spellV2Oft),
+            //     receiveLib,
+            //     ARB_CONFIRMATIONS,
+            //     requiredDvns,
+            //     optionalDvns,
+            //     0
+            // );
         }
     }
 
