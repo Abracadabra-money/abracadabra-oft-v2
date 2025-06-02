@@ -22,8 +22,10 @@ forge test
 ```
 
 # How to deploy MIM OFT
+> For SPELL OFT, replace `MIMOFT` with `SpellOFT` in the commands below and use the configuration in `layerzero.spell.config.ts` instead of `layerzero.mim.config.ts`.
 
 ## 1. Deploy FeeHandler
+> Can be reused for both MIM and SPELL OFT.
 
 Edit `deploy/FeeHandler.ts` and update `configurations` with the right values for the network you are deploying to.
 
@@ -44,9 +46,7 @@ bunx hardhat lz:deploy --tags MIMOFT --networks <network-name>
 ## 3. Verify
 
 ```
-bunx hardhat etherscan-verify --network <network-name> --contract-name MIMOFT_Implementation
-bunx hardhat etherscan-verify --network <network-name> --contract-name MIMOFT_ProxyAdmin
-bunx hardhat etherscan-verify --network <network-name> --contract-name MIMOFT_FeeHandler
+bunx hardhat etherscan-verify --network <network-name>
 ```
 
 > On Hyperliquid it should be sourcify:
@@ -55,6 +55,8 @@ bunx hardhat sourcify --endpoint "https://sourcify.parsec.finance"
 ```
 
 ## 4. Change Endpoint Delegate To Owner
+> endpoints: https://docs.layerzero.network/v2/deployments/deployed-contracts
+
 ```
 cast --rpc-url <url> send <oft proxy address> "setDelegate(address)" <owner address>
 ```
@@ -94,7 +96,7 @@ Ask the team to review the deployment.
 > be sure the safe api endpoint is the right transaction api one.
 > For example, appending `/api/v1/safes/<safe address>/` should not fail.
 ```
-bunx hardhat lz:oapp:wire --oapp-config layerzero.mim.config.ts --safe <safe address>
+bunx hardhat lz:oapp:wire --oapp-config layerzero.mim.config.ts --safe
 ```
 
 # EndpointV2 addresses

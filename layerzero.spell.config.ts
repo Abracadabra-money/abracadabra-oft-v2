@@ -2,7 +2,7 @@ import { ExecutorOptionType } from "@layerzerolabs/lz-v2-utilities";
 import { OAppEdgeConfig, OAppEnforcedOption, OmniEdgeHardhat, OmniPointHardhat } from "@layerzerolabs/toolbox-hardhat";
 import { EndpointId } from "@layerzerolabs/lz-definitions";
 import { generateConnectionsConfig } from "@layerzerolabs/metadata-tools";
-import { ETH_SAFE_ADDRESS, ARB_SAFE_ADDRESS, BERA_SAFE_ADDRESS } from "./hardhat.config";
+import { ETH_SAFE_ADDRESS, ARB_SAFE_ADDRESS, BERA_SAFE_ADDRESS, NIBI_SAFE_ADDRESS } from "./hardhat.config";
 
 const ethereumContract: OmniPointHardhat = {
     eid: EndpointId.ETHEREUM_V2_MAINNET,
@@ -16,6 +16,11 @@ const arbitrumContract: OmniPointHardhat = {
 
 const beraContract: OmniPointHardhat = {
     eid: EndpointId.BERA_V2_MAINNET,
+    contractName: 'SpellOFT',
+}
+
+const nibiruContract: OmniPointHardhat = {
+    eid: EndpointId.NIBIRU_V2_MAINNET,
     contractName: 'SpellOFT',
 }
 
@@ -49,8 +54,14 @@ export default async function () {
         [ethereumContract, arbitrumContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
         // Mainnet <> Bera
         [ethereumContract, beraContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+        // Mainnet <> Nibiru
+        [ethereumContract, nibiruContract, [['LayerZero Labs', 'MIM'], []], [15, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
         // Arbitrum <> Bera
         [arbitrumContract, beraContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+        // Arbitrum <> Nibiru
+        [arbitrumContract, nibiruContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+        // Bera <> Nibiru
+        [beraContract, nibiruContract, [['LayerZero Labs', 'MIM'], []], [20, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
     ]) as OmniEdgeHardhat<OAppEdgeConfig>[];
 
     // Prints generated connections
@@ -80,6 +91,14 @@ export default async function () {
                 config: {
                     owner: BERA_SAFE_ADDRESS,
                     delegate: BERA_SAFE_ADDRESS,
+                },
+            },
+            // SPELL Nibiru
+            {
+                contract: nibiruContract,
+                config: {
+                    owner: NIBI_SAFE_ADDRESS,
+                    delegate: NIBI_SAFE_ADDRESS,
                 },
             }
         ],
