@@ -401,8 +401,6 @@ contract AbraForkTestBase is Test {
 
         assertEq(10 * 10 ** sharedDecimals, tenTokensSD);
 
-        // TODO: Uncomment after wired
-        if (block.chainid == NIBIRU_CHAIN_ID) return;
         vm.startPrank(address(endpoint));
         (bytes memory message, ) = OFTMsgCodec.encode(
             OFTComposeMsgCodec.addressToBytes32(address(alice)),
@@ -611,6 +609,9 @@ contract AbraForkTestBase is Test {
             address spellV2ArbPeer = AddressCast.toAddress(spellV2Oft.peers(ARB_EID));
             assertEq(spellV2ArbPeer, SPELLV2_OFT_ARB);
 
+            address spellV2NibiruPeer = AddressCast.toAddress(spellV2Oft.peers(NIBIRU_EID));
+            assertEq(spellV2NibiruPeer, SPELLV2_OFT_NIBIRU);
+
             // bSpell
 
             address bspellBeraPeer = AddressCast.toAddress(bSpellOft.peers(BERA_EID));
@@ -628,6 +629,9 @@ contract AbraForkTestBase is Test {
 
             address spellV2BeraPeer = AddressCast.toAddress(spellV2Oft.peers(BERA_EID));
             assertEq(spellV2BeraPeer, SPELLV2_OFT_BERA);
+
+            address spellV2NibiruPeer = AddressCast.toAddress(spellV2Oft.peers(NIBIRU_EID));
+            assertEq(spellV2NibiruPeer, SPELLV2_OFT_NIBIRU);
 
             // bSpell
 
@@ -656,6 +660,9 @@ contract AbraForkTestBase is Test {
             address spellV2ArbPeer = AddressCast.toAddress(spellV2Oft.peers(ARB_EID));
             assertEq(spellV2ArbPeer, SPELLV2_OFT_ARB);
 
+            address spellV2NibiruPeer = AddressCast.toAddress(spellV2Oft.peers(NIBIRU_EID));
+            assertEq(spellV2NibiruPeer, SPELLV2_OFT_NIBIRU);
+
             // bSpell
 
             address bspellEthPeer = AddressCast.toAddress(bSpellOft.peers(ETH_EID));
@@ -670,6 +677,18 @@ contract AbraForkTestBase is Test {
 
             address mimBeraPeer = AddressCast.toAddress(mimOft.peers(BERA_EID));
             assertEq(mimBeraPeer, MIM_OFT_BERA);
+
+            // SpellV2
+            address spellV2EthPeer = AddressCast.toAddress(spellV2Oft.peers(ETH_EID));
+            assertEq(spellV2EthPeer, SPELLV2_OFT_ETH);
+
+            address spellV2ArbPeer = AddressCast.toAddress(spellV2Oft.peers(ARB_EID));
+            assertEq(spellV2ArbPeer, SPELLV2_OFT_ARB);
+
+            address spellV2BeraPeer = AddressCast.toAddress(spellV2Oft.peers(BERA_EID));
+            assertEq(spellV2BeraPeer, SPELLV2_OFT_BERA);
+
+
         } else if (block.chainid == HYPER_CHAIN_ID) {
             // MIM
             address mimNiburuPeer = AddressCast.toAddress(mimOft.peers(NIBIRU_EID));
@@ -1015,60 +1034,70 @@ contract AbraForkTestBase is Test {
         }
         else if (block.chainid == NIBIRU_CHAIN_ID) {
             address[] memory requiredDvns = new address[](2);
-            requiredDvns[0] = LZ_DVN_NIBIRU;
-            requiredDvns[1] = MIM_DVN_NIBIRU;
+            requiredDvns[1] = LZ_DVN_NIBIRU;
+            requiredDvns[0] = MIM_DVN_NIBIRU;
 
             address[] memory optionalDvns = new address[](0);
 
-            // _verify_uln_config(
-            //     ETH_EID,
-            //     address(spellV2Oft),
-            //     sendLib,
-            //     NIBIRU_CONFIRMATIONS,
-            //     requiredDvns,
-            //     optionalDvns,
-            //     0
-            // );
+            _verify_uln_config(
+                ETH_EID,
+                address(spellV2Oft),
+                sendLib,
+                NIBIRU_CONFIRMATIONS,
+                requiredDvns,
+                optionalDvns,
+                0
+            );
 
-            // _verify_uln_config(
-            //     ARB_EID,
-            //     address(spellV2Oft),
-            //     sendLib,
-            //     NIBIRU_CONFIRMATIONS,
-            //     requiredDvns,
-            //     optionalDvns,
-            //     0
-            // );
+            _verify_uln_config(
+                ARB_EID,
+                address(spellV2Oft),
+                sendLib,
+                NIBIRU_CONFIRMATIONS,
+                requiredDvns,
+                optionalDvns,
+                0
+            );
 
-            // _verify_uln_config(
-            //     BERA_EID,
-            //     address(spellV2Oft),
-            //     sendLib,
-            //     NIBIRU_CONFIRMATIONS,
-            //     requiredDvns,
-            //     optionalDvns,
-            //     0
-            // );
+            _verify_uln_config(
+                BERA_EID,
+                address(spellV2Oft),
+                sendLib,
+                NIBIRU_CONFIRMATIONS,
+                requiredDvns,
+                optionalDvns,
+                0
+            );
 
-            // _verify_uln_config(
-            //     ETH_EID,
-            //     address(spellV2Oft),
-            //     receiveLib,
-            //     ETH_CONFIRMATIONS,
-            //     requiredDvns,
-            //     optionalDvns,
-            //     0
-            // );
+            _verify_uln_config(
+                ETH_EID,
+                address(spellV2Oft),
+                receiveLib,
+                ETH_CONFIRMATIONS,
+                requiredDvns,
+                optionalDvns,
+                0
+            );
 
-            // _verify_uln_config(
-            //     ARB_EID,
-            //     address(spellV2Oft),
-            //     receiveLib,
-            //     ARB_CONFIRMATIONS,
-            //     requiredDvns,
-            //     optionalDvns,
-            //     0
-            // );
+            _verify_uln_config(
+                ARB_EID,
+                address(spellV2Oft),
+                receiveLib,
+                ARB_CONFIRMATIONS,
+                requiredDvns,
+                optionalDvns,
+                0
+            );
+
+            _verify_uln_config(
+                BERA_EID,
+                address(spellV2Oft),
+                receiveLib,
+                BERA_CONFIRMATIONS,
+                requiredDvns,
+                optionalDvns,
+                0
+            );
         }
     }
 
